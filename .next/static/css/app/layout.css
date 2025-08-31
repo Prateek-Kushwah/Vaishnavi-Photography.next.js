@@ -1,0 +1,97 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/app/globals.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --primary-bg: #111827;
+  --secondary-bg: #e4e5f1; /* light section bg */
+  --primary-text: #f9fafb;
+  --secondary-text: #d1d5db;
+  --gradient-highlight: linear-gradient(90deg, #818cf8, #c084fc);
+  --gradient-cta: linear-gradient(90deg, #6366f1, #a855f7);
+  --button-shadow: rgba(168, 85, 247, 0.5);
+  --button-shadow-hover: rgba(168, 85, 247, 0.6);
+  --shape-purple: #8b5cf6;
+  --shape-blue: #3b82f6;
+  --shape-pink: #ec4899;
+  --shape-green: #10b981;
+  --hover-color: rgba(168, 85, 247, 0.8); /* Added missing variable */
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Playfair Display", "Raleway", "Poppins", sans-serif;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  background-attachment: fixed;
+}
+
+/* Add some padding to the main content so it doesn't hide behind the fixed navbar */
+.main-content {
+  padding-top: 80px; /* Reduced to account for header */
+}
+
+/* Universal Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.title {
+  font-family: "Playfair Display", "Raleway", "Poppins", sans-serif;
+  font-size: 3em;
+  font-weight: 700;
+  color: var(--primary-text);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-family: "Raleway", "Poppins", sans-serif;
+  font-size: 1.5em;
+  font-weight: 300;
+  color: var(--secondary-text);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  background: var(--gradient-cta);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 10px 30px -10px var(--button-shadow);
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+}
+
+.gallery-main-container {
+  padding: 2rem;
+}
+
+
