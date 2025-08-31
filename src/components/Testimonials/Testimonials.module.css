@@ -1,0 +1,620 @@
+/* components/Testimonials/Testimonials.module.css */
+.testimonials {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--primary-bg) 0%, #1a2238 100%);
+  color: var(--primary-text);
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bgElement1,
+.bgElement2,
+.bgElement3 {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gradient-highlight);
+  opacity: 0.1;
+  filter: blur(60px);
+  animation: float 15s infinite ease-in-out;
+}
+
+.bgElement1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.bgElement2 {
+  width: 150px;
+  height: 150px;
+  bottom: 20%;
+  left: 15%;
+  animation-delay: 5s;
+}
+
+.bgElement3 {
+  width: 120px;
+  height: 120px;
+  top: 40%;
+  left: 5%;
+  animation-delay: 10s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-5deg);
+  }
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: fadeInUp 1s ease-out;
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: var(--gradient-highlight);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.addReviewButton {
+  padding: 0.8rem 1.5rem;
+  background: var(--gradient-highlight);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 50px;
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.addReviewButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Review Form Styles */
+.reviewFormContainer {
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.reviewForm {
+  background: rgba(249, 250, 251, 0.05);
+  border: 1px solid rgba(249, 250, 251, 0.1);
+  border-radius: 16px;
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.formTitle {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--primary-text);
+  text-align: center;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: rgba(249, 250, 251, 0.08);
+  border: 1px solid rgba(249, 250, 251, 0.15);
+  border-radius: 8px;
+  color: var(--primary-text);
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: rgba(168, 85, 247, 0.5);
+  background: rgba(249, 250, 251, 0.12);
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Style for optgroups in select */
+.formGroup select optgroup {
+  background: var(--primary-bg);
+}
+
+.formGroup select optgroup option {
+  padding: 0.5rem;
+  background: var(--primary-bg);
+}
+
+.ratingInput {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.star {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.2s ease;
+}
+
+.interactiveStar {
+  cursor: pointer;
+}
+
+.interactiveStar:hover {
+  color: #FFD700;
+}
+
+.filledStar {
+  color: #FFD700;
+}
+
+.emptyStar {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.ratingText {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  margin-left: 1rem;
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: var(--gradient-cta);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 50px;
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.successMessage {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  color: #10b981;
+}
+
+.successMessage p {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+}
+
+/* Testimonial Display Styles */
+.testimonialContainer {
+  margin-bottom: 4rem;
+}
+
+.testimonialContent {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.testimonialCard {
+  background: rgba(249, 250, 251, 0.03);
+  border: 1px solid rgba(249, 250, 251, 0.05);
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.8s ease;
+  opacity: 0;
+}
+
+.testimonialCard.next {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.testimonialCard.prev {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.quoteIcon {
+  margin-bottom: 2rem;
+  color: var(--gradient-highlight);
+  opacity: 0.7;
+}
+
+.testimonialText {
+  margin-bottom: 2.5rem;
+}
+
+.content {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--primary-text);
+  font-style: italic;
+  position: relative;
+}
+
+.clientInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clientDetails {
+  text-align: center;
+}
+
+.clientName {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--primary-text);
+}
+
+.clientRole {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  margin-bottom: 0.8rem;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.category {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  background: var(--gradient-highlight);
+  color: var(--primary-text);
+  border-radius: 15px;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navButtons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navButton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(249, 250, 251, 0.2);
+  background: rgba(249, 250, 251, 0.05);
+  color: var(--primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navButton:hover {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: scale(1.1);
+}
+
+.playButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(249, 250, 251, 0.1);
+  color: var(--primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.playButton.playing {
+  background: var(--gradient-highlight);
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+}
+
+.dots {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(249, 250, 251, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.dot:hover::after {
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.dot.active {
+  background: var(--gradient-highlight);
+  transform: scale(1.2);
+}
+
+.dot.active::after {
+  border-color: rgba(168, 85, 247, 0.5);
+  width: 20px;
+  height: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding-top: 3rem;
+  border-top: 1px solid rgba(249, 250, 251, 0.1);
+}
+
+.stat {
+  text-align: center;
+}
+
+.statNumber {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--gradient-highlight);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .testimonials {
+    padding: 3rem 0;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .testimonialCard {
+    padding: 2rem;
+  }
+  
+  .content {
+    font-size: 1.1rem;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .statNumber {
+    font-size: 2rem;
+  }
+  
+  .reviewForm {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonialCard {
+    padding: 1.5rem;
+  }
+  
+  .content {
+    font-size: 1rem;
+  }
+  
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .playButton {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .ratingInput {
+    flex-wrap: wrap;
+  }
+  
+  .ratingText {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}
+.input:-webkit-autofill,
+  .input:-webkit-autofill:hover,
+  .input:-webkit-autofill:focus,
+  .input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--primary-text) !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1a2035 inset !important;
+    box-shadow: 0 0 0px 1000px #1a2035 inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    color: var(--primary-text) !important;
+    background-color: #1a2035 !important;
+    border: none;
+  }
+  
+  /* For Firefox */
+  .input:-moz-ui-valid {
+    box-shadow: 0 0 0px 1000px #1a2035 inset !important;
+    color: var(--primary-text) !important;
+    background-color: #1a2035 !important;
+  }
+  
+  /* Ensure the text color remains visible */
+  .input:-webkit-autofill::first-line {
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-text);
+  }
+  

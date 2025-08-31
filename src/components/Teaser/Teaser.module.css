@@ -1,0 +1,328 @@
+/* components/Teaser/Teaser.module.css */
+.teaser {
+    position: relative;
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a2238 100%);
+    color: var(--primary-text);
+    overflow: hidden;
+  }
+  
+  .backgroundEffect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    z-index: 1;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .textContent {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--gradient-highlight);
+    color: var(--primary-text);
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  
+  .highlight {
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .description {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--secondary-text);
+    margin-bottom: 2rem;
+  }
+  
+  .countdown {
+    margin-bottom: 2rem;
+  }
+  
+  .countdownTitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--secondary-text);
+  }
+  
+  .timer {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .timeUnit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(249, 250, 251, 0.05);
+    padding: 0.8rem;
+    border-radius: 8px;
+    min-width: 70px;
+    border: 1px solid rgba(249, 250, 251, 0.1);
+  }
+  
+  .timeValue {
+    font-family: "Playfair Display", serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .timeLabel {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    color: var(--secondary-text);
+    margin-top: 0.3rem;
+  }
+  
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.95rem;
+  }
+  
+  .ctaContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    background: var(--gradient-cta);
+    color: var(--primary-text);
+    border: none;
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px -10px var(--button-shadow);
+    width: fit-content;
+  }
+  
+  .ctaButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+  }
+  
+  .ctaNote {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    font-style: italic;
+  }
+  
+  .imageContent {
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .image {
+    object-fit: cover;
+  }
+  
+  .imageOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      rgba(17, 24, 39, 0.4) 0%,
+      rgba(168, 85, 247, 0.2) 100%
+    );
+  }
+  
+  .floatingElement1,
+  .floatingElement2,
+  .floatingElement3 {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gradient-highlight);
+    opacity: 0.3;
+    filter: blur(40px);
+    z-index: -1;
+  }
+  
+  .floatingElement1 {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    right: -50px;
+    animation: float 8s infinite ease-in-out;
+  }
+  
+  .floatingElement2 {
+    width: 150px;
+    height: 150px;
+    bottom: -30px;
+    left: -30px;
+    animation: float 10s infinite ease-in-out reverse;
+  }
+  
+  .floatingElement3 {
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    right: 30px;
+    animation: float 12s infinite ease-in-out 1s;
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(10deg);
+    }
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 968px) {
+    .content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    .imageContent {
+      order: -1;
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .teaser {
+      padding: 3rem 0;
+    }
+    
+    .timer {
+      gap: 0.5rem;
+    }
+    
+    .timeUnit {
+      min-width: 60px;
+      padding: 0.6rem;
+    }
+    
+    .timeValue {
+      font-size: 1.5rem;
+    }
+    
+    .imageWrapper {
+      height: 400px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .timer {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .timeUnit {
+      min-width: 70px;
+    }
+    
+    .title {
+      font-size: 1.8rem;
+    }
+    
+    .description {
+      font-size: 1rem;
+    }
+    
+    .imageWrapper {
+      height: 300px;
+    }
+    
+    .floatingElement1,
+    .floatingElement2,
+    .floatingElement3 {
+      display: none;
+    }
+  }

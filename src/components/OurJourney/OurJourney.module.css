@@ -1,0 +1,345 @@
+/* components/OurJourney/OurJourney.module.css */
+.ourJourney {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a2238 100%);
+    color: var(--primary-text);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .subtitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .categoryFilter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .categoryButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: rgba(249, 250, 251, 0.05);
+    color: var(--secondary-text);
+    border: 1px solid rgba(249, 250, 251, 0.1);
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .categoryButton:hover {
+    background: rgba(168, 85, 247, 0.1);
+    color: var(--primary-text);
+  }
+  
+  .categoryButton.active {
+    background: var(--gradient-highlight);
+    color: var(--primary-text);
+    border-color: transparent;
+  }
+  
+  .timeline {
+    position: relative;
+    padding: 2rem 0;
+    margin-bottom: 4rem;
+  }
+  
+  .timelineLine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gradient-highlight);
+    transform: translateX(-50%);
+  }
+  
+  .timelineItem {
+    position: relative;
+    margin-bottom: 4rem;
+    width: 100%;
+  }
+  
+  .timelineItem:last-child {
+    margin-bottom: 0;
+  }
+  
+  .timelineContent {
+    position: relative;
+    width: 45%;
+  }
+  
+  .timelineItem.left .timelineContent {
+    left: 0;
+  }
+  
+  .timelineItem.right .timelineContent {
+    left: 55%;
+  }
+  
+  .yearMarker {
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--gradient-highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-text);
+    z-index: 2;
+  }
+  
+  .timelineItem.left .yearMarker {
+    right: -40px;
+  }
+  
+  .timelineItem.right .yearMarker {
+    left: -40px;
+  }
+  
+  .contentCard {
+    background: rgba(249, 250, 251, 0.05);
+    border: 1px solid rgba(249, 250, 251, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  
+  .contentCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .milestoneBadge {
+    position: absolute;
+    top: -0.8rem;
+    right: 1.5rem;
+    background: var(--gradient-highlight);
+    color: var(--primary-text);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+  }
+  
+  .textContent {
+    padding-top: 0.5rem;
+  }
+  
+  .itemTitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-text);
+  }
+  
+  .itemDescription {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--secondary-text);
+    margin-bottom: 1.5rem;
+  }
+  
+  .itemMeta {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .metaItem {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+  }
+  
+  .statsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(249, 250, 251, 0.1);
+  }
+  
+  .statItem {
+    text-align: center;
+  }
+  
+  .statNumber {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+  
+  .statLabel {
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+    color: var(--secondary-text);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 968px) {
+    .timelineLine {
+      left: 30px;
+    }
+    
+    .timelineContent {
+      width: 85%;
+      left: 15% !important;
+    }
+    
+    .yearMarker {
+      left: -70px !important;
+      right: auto !important;
+      width: 60px;
+      height: 60px;
+      font-size: 1.2rem;
+    }
+    
+    .statsContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .ourJourney {
+      padding: 3rem 0;
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+    
+    .categoryFilter {
+      gap: 0.5rem;
+    }
+    
+    .categoryButton {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+    
+    .timelineContent {
+      width: 90%;
+      left: 10% !important;
+    }
+    
+    .yearMarker {
+      left: -60px !important;
+      width: 50px;
+      height: 50px;
+      font-size: 1rem;
+    }
+    
+    .textContent {
+      padding: 0;
+    }
+    
+    .itemTitle {
+      font-size: 1.1rem;
+    }
+    
+    .itemDescription {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .categoryFilter {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding-bottom: 0.5rem;
+    }
+    
+    .categoryButton {
+      white-space: nowrap;
+    }
+    
+    .timelineContent {
+      width: 85%;
+      left: 15% !important;
+    }
+    
+    .yearMarker {
+      left: -50px !important;
+      width: 40px;
+      height: 40px;
+      font-size: 0.9rem;
+    }
+    
+    .contentCard {
+      padding: 1.2rem;
+    }
+    
+    .milestoneBadge {
+      right: 1rem;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.7rem;
+    }
+    
+    .statsContainer {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .statNumber {
+      font-size: 2rem;
+    }
+  }

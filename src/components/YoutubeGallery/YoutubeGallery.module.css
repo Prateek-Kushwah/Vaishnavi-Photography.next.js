@@ -1,0 +1,337 @@
+/* components/YouTubeGallery/YouTubeGallery.module.css */
+.youtubeGallery {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a2238 100%);
+    color: var(--primary-text);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .titleSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .youtubeIcon {
+    color: #FF0000; /* YouTube red */
+  }
+  
+  .title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .subtitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .videoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .videoCard {
+    background: rgba(249, 250, 251, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(249, 250, 251, 0.1);
+  }
+  
+  .videoCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .videoThumbnail {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  .thumbnailImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .videoCard:hover .thumbnailImage {
+    transform: scale(1.05);
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(17, 24, 39, 0.7) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .videoThumbnail:hover .overlay {
+    opacity: 1;
+  }
+  
+  .playButton {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 0, 0, 0.8); /* YouTube red with transparency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  
+  .playButton:hover {
+    transform: scale(1.1);
+    background: rgba(255, 0, 0, 1);
+  }
+  
+  .videoDuration {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+  }
+  
+  .categoryBadge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--gradient-highlight);
+    color: var(--primary-text);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .videoInfo {
+    padding: 1.5rem;
+  }
+  
+  .videoTitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--primary-text);
+  }
+  
+  .videoDescription {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--secondary-text);
+  }
+  
+  .ctaContainer {
+    text-align: center;
+  }
+  
+  .ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    background: #FF0000; /* YouTube red */
+    color: var(--primary-text);
+    text-decoration: none;
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px -10px rgba(255, 0, 0, 0.5);
+  }
+  
+  .ctaButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -10px rgba(255, 0, 0, 0.6);
+  }
+  
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(17, 24, 39, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  
+  .modalContent {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    background: var(--primary-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s ease;
+  }
+  
+  .closeButton:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  
+  .videoContainer {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  }
+  
+  .videoIframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .modalVideoInfo {
+    padding: 1.5rem;
+  }
+  
+  .modalVideoTitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--primary-text);
+  }
+  
+  .modalVideoDescription {
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--secondary-text);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 968px) {
+    .videoGrid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .youtubeGallery {
+      padding: 3rem 0;
+    }
+    
+    .videoGrid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto 3rem;
+    }
+    
+    .title {
+      font-size: 1.8rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+    
+    .modalContent {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .videoThumbnail {
+      height: 180px;
+    }
+    
+    .videoInfo {
+      padding: 1rem;
+    }
+    
+    .videoTitle {
+      font-size: 1.1rem;
+    }
+    
+    .modalVideoInfo {
+      padding: 1rem;
+    }
+    
+    .modalVideoTitle {
+      font-size: 1.2rem;
+    }
+  }

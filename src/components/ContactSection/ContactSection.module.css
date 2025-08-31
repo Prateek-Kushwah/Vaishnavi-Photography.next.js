@@ -1,0 +1,282 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  .contactSection {
+    position: relative;
+    padding: 5rem 0;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  
+  .contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .label {
+    font-weight: 500;
+    color: var(--secondary-text);
+    font-family: Poppins , sans-serif;
+  }
+  
+  .input,
+  .textarea {
+    padding: 0.75rem 1rem;
+    font-weight: 500;;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: rgba(249, 250, 251, 0.07);
+    color: var(--primary-text);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    caret-color: var(--primary-text);
+  }
+  
+  .input:focus,
+  .textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--shape-purple);
+    background-color: rgba(249, 250, 251, 0.1);
+  }
+  
+  .textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .submitButton {
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: var(--gradient-cta);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px var(--button-shadow);
+    margin-top: 0.5rem;
+  }
+  
+  .submitButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--button-shadow-hover);
+  }
+  
+  .contactInfo {
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: rgba(228, 229, 241, 0.05);
+  }
+  
+  .infoTitle {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--primary-text);
+  }
+  
+  .infoItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .infoIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-highlight);
+    flex-shrink: 0;
+  }
+  
+  .infoIcon svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+  }
+  
+  .infoContent h4 {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--primary-text);
+  }
+  
+  .infoContent p {
+    color: var(--secondary-text);
+  }
+  
+  /* Fix for browser autofill styles */
+  .input:-webkit-autofill,
+  .input:-webkit-autofill:hover,
+  .input:-webkit-autofill:focus,
+  .input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--primary-text) !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1a2035 inset !important;
+    box-shadow: 0 0 0px 1000px #1a2035 inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    color: var(--primary-text) !important;
+    background-color: #1a2035 !important;
+    border: none;
+  }
+  
+  /* For Firefox */
+  .input:-moz-ui-valid {
+    box-shadow: 0 0 0px 1000px #1a2035 inset !important;
+    color: var(--primary-text) !important;
+    background-color: #1a2035 !important;
+  }
+  
+  /* Ensure the text color remains visible */
+  .input:-webkit-autofill::first-line {
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-text);
+  }
+  
+  /* Animation-based detection */
+  @keyframes onAutoFillStart {
+    from { /**/ }
+    to { /**/ }
+  }
+  
+  @keyframes onAutoFillCancel {
+    from { /**/ }
+    to { /**/ }
+  }
+  
+  .input {
+    animation-duration: 0.01s;
+    animation-name: onAutoFillCancel;
+  }
+  
+  .input:-webkit-autofill {
+    animation-duration: 0.01s;
+    animation-name: onAutoFillStart;
+  }
+  
+  /* Style for autofilled inputs */
+  .autofilled {
+    background-color: #1a2035 !important;
+    color: var(--primary-text) !important;
+    -webkit-text-fill-color: var(--primary-text) !important;
+  }
+  
+  /* Decorative shapes */
+  .shape1,
+  .shape2,
+  .shape3 {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .shape1 {
+    width: 300px;
+    height: 300px;
+    background: var(--shape-blue);
+    opacity: 0.1;
+    filter: blur(40px);
+    top: -100px;
+    right: -100px;
+  }
+  
+  .shape2 {
+    width: 200px;
+    height: 200px;
+    background: var(--shape-purple);
+    opacity: 0.1;
+    filter: blur(40px);
+    bottom: 50px;
+    left: -50px;
+  }
+  
+  .shape3 {
+    width: 150px;
+    height: 150px;
+    background: var(--shape-pink);
+    opacity: 0.1;
+    filter: blur(40px);
+    bottom: -50px;
+    right: 30%;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 900px) {
+    .content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .contactSection {
+      padding: 3rem 0;
+    }
+    
+    .title {
+      font-size: 1.75rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+    
+    .infoItem {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+  }

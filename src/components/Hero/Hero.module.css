@@ -1,0 +1,155 @@
+/* Hero.module.css */
+
+/* Main container for the hero section */
+.link{
+  text-decoration: none;
+  color: var(--primary-text);
+}
+.heroContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
+  padding: 2rem;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Content wrapper */
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Main headline styling */
+.headline {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Highlighted text within the headline */
+.highlight {
+  background: var(--gradient-highlight);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subheadline styling */
+.subheadline {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  max-width: 600px;
+  color: var(--secondary-text);
+  line-height: 1.6;
+}
+
+/* Call-to-action button styling */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  background: var(--gradient-cta);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 10px 30px -10px var(--button-shadow);
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+}
+
+/* --- Animated Background Shapes --- */
+
+.animatedShapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(80px);
+  animation: float 20s infinite ease-in-out alternate;
+}
+
+/* Individual shape styles and positions */
+.shape1 {
+  width: 400px;
+  height: 400px;
+  background: var(--shape-purple);
+  top: -10%;
+  left: -5%;
+  animation-duration: 22s;
+}
+
+.shape2 {
+  width: 350px;
+  height: 350px;
+  background: var(--shape-blue);
+  bottom: -15%;
+  right: -10%;
+  animation-duration: 25s;
+}
+
+.shape3 {
+  width: 250px;
+  height: 250px;
+  background: var(--shape-pink);
+  top: 20%;
+  right: 15%;
+  animation-duration: 18s;
+}
+
+.shape4 {
+  width: 200px;
+  height: 200px;
+  background: var(--shape-green);
+  bottom: 25%;
+  left: 10%;
+  animation-duration: 28s;
+}
+
+/* Keyframe animation for the floating effect */
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50px) translateX(40px) rotate(90deg);
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .heroContainer {
+    min-height: 70vh;
+    padding: 1rem;
+  }
+
+  .headline {
+    letter-spacing: normal;
+  }
+}

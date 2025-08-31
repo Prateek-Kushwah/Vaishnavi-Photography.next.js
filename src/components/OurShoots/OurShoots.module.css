@@ -1,0 +1,260 @@
+/* components/OurShoots/OurShoots.module.css */
+.ourShoots {
+    padding: 5rem 0;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--gradient-highlight);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .subtitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .categoryFilter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .categoryButton {
+    padding: 0.6rem 1.5rem;
+    background: rgba(249, 250, 251, 0.05);
+    color: var(--secondary-text);
+    border: 1px solid rgba(249, 250, 251, 0.1);
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .categoryButton:hover {
+    background: rgba(168, 85, 247, 0.1);
+    color: var(--primary-text);
+  }
+  
+  .categoryButton.active {
+    background: var(--gradient-highlight);
+    color: var(--primary-text);
+    border-color: transparent;
+  }
+  
+  .galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .galleryItem {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/5;
+    transition: transform 0.3s ease;
+  }
+  
+  .galleryItem:hover {
+    transform: translateY(-5px);
+  }
+  
+  .imageContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .image {
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .galleryItem:hover .image {
+    transform: scale(1.05);
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(17, 24, 39, 0.8) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+  }
+  
+  .galleryItem:hover .overlay {
+    opacity: 1;
+  }
+  
+  .overlayContent {
+    width: 100%;
+  }
+  
+  .shootTitle {
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-text);
+  }
+  
+  .shootMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .metaItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+  }
+  
+  .viewButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--gradient-highlight);
+    color: var(--primary-text);
+    border: none;
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .viewButton:hover {
+    transform: translateX(5px);
+  }
+  
+  .ctaContainer {
+    text-align: center;
+  }
+  
+  .ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    background: var(--gradient-cta);
+    color: var(--primary-text);
+    text-decoration: none;
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px -10px var(--button-shadow);
+  }
+  
+  .ctaButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .ourShoots {
+      padding: 3rem 0;
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+    
+    .categoryFilter {
+      gap: 0.5rem;
+    }
+    
+    .categoryButton {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+    
+    .galleryGrid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .overlay {
+      padding: 1rem;
+    }
+    
+    .shootTitle {
+      font-size: 1rem;
+    }
+    
+    .metaItem {
+      font-size: 0.8rem;
+    }
+    
+    .viewButton {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .galleryGrid {
+      grid-template-columns: 1fr;
+    }
+    
+    .categoryFilter {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding-bottom: 0.5rem;
+    }
+    
+    .categoryButton {
+      white-space: nowrap;
+    }
+  }
