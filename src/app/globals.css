@@ -2,7 +2,9 @@
 
 :root {
   --primary-bg: #111827;
-  --secondary-bg: #e4e5f1; /* light section bg */
+  --secondary-bg: #e4e5f1;
+  --card-bg: rgba(31, 41, 55, 0.5); /* Darker, semi-transparent card background */
+  --input-bg: rgba(17, 24, 39, 0.8);  /* Darker input background */
   --primary-text: #f9fafb;
   --secondary-text: #d1d5db;
   --gradient-highlight: linear-gradient(90deg, #818cf8, #c084fc);
@@ -12,9 +14,9 @@
   --shape-purple: #8b5cf6;
   --shape-blue: #3b82f6;
   --shape-pink: #ec4899;
-  --shape-green: #10b981;
-  --hover-color: rgba(168, 85, 247, 0.8); /* Added missing variable */
+  --hover-color: rgba(168, 85, 247, 0.8);
 }
+
 
 *{
   margin: 0;
@@ -91,3 +93,22 @@ body {
   padding: 2rem;
 }
 
+  .primaryButton {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    background: var(--gradient-cta);
+    color: var(--primary-text);
+    border: none;
+    border-radius: 50px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px -10px var(--button-shadow);
+  }
+  
+  .primaryButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+  }

@@ -4,6 +4,8 @@ node_modules/
 # Ignore public folder
 public/
 
+.next/
+
 # Optional: Mac system files
 .DS_Store
 

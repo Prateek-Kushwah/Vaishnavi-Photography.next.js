@@ -172,30 +172,34 @@
     color: var(--secondary-text);
   }
   
-  .ctaContainer {
-    text-align: center;
-  }
-  
-  .ctaButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 2rem;
-    background: #FF0000; /* YouTube red */
-    color: var(--primary-text);
-    text-decoration: none;
-    border-radius: 50px;
-    font-family: "Raleway", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 10px 30px -10px rgba(255, 0, 0, 0.5);
-  }
-  
-  .ctaButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px -10px rgba(255, 0, 0, 0.6);
-  }
+/* ... existing styles ... */
+
+.ctaContainer {
+  text-align: center;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 2rem;
+  background: var(--gradient-cta);
+  color: var(--primary-text);
+  text-decoration: none;
+  border-radius: 50px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px -10px var(--button-shadow);
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+}
+
+/* ... existing styles ... */
   
   /* Modal Styles */
   .modal {

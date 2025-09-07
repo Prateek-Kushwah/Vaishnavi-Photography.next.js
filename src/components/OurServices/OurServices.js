@@ -1,11 +1,12 @@
+
 "use client"
 // components/OurServices/OurServices.js
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { 
-  Camera, 
-  Heart, 
-  Users, 
+import {
+  Camera,
+  Heart,
+  Users,
   Calendar,
   MapPin,
   Clock,
@@ -17,6 +18,7 @@ import {
   Check
 } from 'lucide-react';
 import styles from './OurServices.module.css';
+import Link from 'next/link';
 
 const OurServices = () => {
   const [activeService, setActiveService] = useState(0);
@@ -136,7 +138,7 @@ const OurServices = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    
+
     // Restart auto-play after a delay
     setTimeout(() => {
       setIsPlaying(true);
@@ -183,23 +185,23 @@ const OurServices = () => {
             </div>
 
             <div className={styles.navControls}>
-              <button 
+              <button
                 className={styles.navButton}
                 onClick={prevService}
                 aria-label="Previous service"
               >
                 <ChevronLeft size={20} />
               </button>
-              
-              <button 
+
+              <button
                 className={`${styles.playButton} ${isPlaying ? styles.playing : ''}`}
                 onClick={toggleAutoPlay}
                 aria-label={isPlaying ? "Pause auto play" : "Start auto play"}
               >
                 {isPlaying ? <Pause size={16} /> : <Play size={16} />}
               </button>
-              
-              <button 
+
+              <button
                 className={styles.navButton}
                 onClick={nextService}
                 aria-label="Next service"
@@ -219,11 +221,11 @@ const OurServices = () => {
                   className={styles.image}
                 />
                 <div className={styles.imageOverlay}></div>
-                
+
                 <div className={styles.categoryBadge}>
                   {services[activeService].category}
                 </div>
-                
+
                 <div className={styles.serviceIndicator}>
                   <span className={styles.currentNumber}>0{activeService + 1}</span>
                   <span className={styles.totalNumber}>/0{services.length}</span>
@@ -251,8 +253,8 @@ const OurServices = () => {
                   <span>{services[activeService].duration}</span>
                 </div>
                 <div className={styles.metaItem}>
-                  <Award size={18} />
-                  <span>{services[activeService].price}</span>
+                  {/* <Award size={18} /> */}
+                  {/* <span>{services[activeService].price}</span> */}
                 </div>
               </div>
 
@@ -269,9 +271,11 @@ const OurServices = () => {
               </div>
 
               <div className={styles.ctaButtons}>
-                <button className={styles.primaryButton}>
-                  Book This Service
-                </button>
+                <Link href={"/#contact"} className={styles.primaryButton}>
+                  <button className={styles.primaryButton}>
+                    Book This Service
+                  </button>
+                </Link>
                 <button className={styles.secondaryButton}>
                   View Portfolio
                 </button>
@@ -284,8 +288,8 @@ const OurServices = () => {
           <h3 className={styles.gridTitle}>Explore All Services</h3>
           <div className={styles.servicesGrid}>
             {services.map((service, index) => (
-              <div 
-                key={service.id} 
+              <div
+                key={service.id}
                 className={`${styles.serviceCard} ${index === activeService ? styles.activeCard : ''}`}
                 onClick={() => goToService(index)}
               >

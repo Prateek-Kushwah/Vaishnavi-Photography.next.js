@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Image from "next/image";
+import { useState, useRef, useEffect } from "react";
 import {
   Play,
   Pause,
   Volume2,
   VolumeX,
   Fullscreen,
-  ArrowRight,
 } from "lucide-react";
 import styles from "./VideoTeaser.module.css";
 
@@ -16,7 +14,27 @@ const VideoTeaser = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [showOverlay, setShowOverlay] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const updateTime = () => {
+      setCurrentTime(video.currentTime);
+      setDuration(video.duration || 0);
+    };
+
+    video.addEventListener('timeupdate', updateTime);
+    video.addEventListener('loadedmetadata', updateTime);
+
+    return () => {
+      video.removeEventListener('timeupdate', updateTime);
+      video.removeEventListener('loadedmetadata', updateTime);
+    };
+  }, []);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -54,6 +72,17 @@ const VideoTeaser = () => {
     setShowOverlay(true);
   };
 
+  const handleTimeBarClick = (e) => {
+    if (videoRef.current) {
+      const timeBar = e.currentTarget;
+      const clickPosition = e.clientX - timeBar.getBoundingClientRect().left;
+      const percentage = clickPosition / timeBar.offsetWidth;
+      videoRef.current.currentTime = percentage * duration;
+    }
+  };
+
+  const progress = duration ? (currentTime / duration) * 100 : 0;
+
   return (
     <section className={styles.videoTeaser}>
       <div className={styles.container}>
@@ -69,7 +98,7 @@ const VideoTeaser = () => {
             <video
               ref={videoRef}
               className={styles.video}
-              poster="/teaser.poster.jpg"
+              poster="/teaser-poster.jpg"
               muted={isMuted}
               onEnded={handleVideoEnd}
               loop={false}
@@ -79,7 +108,7 @@ const VideoTeaser = () => {
             </video>
 
             {showOverlay && (
-              <div className={styles.videoOverlay}>
+              <div className={styles.videoOverlay} onClick={togglePlay}>
                 <div className={styles.overlayContent}>
                   <button
                     className={styles.playButton}
@@ -114,18 +143,10 @@ const VideoTeaser = () => {
                 {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
               </button>
 
-              <div className={styles.timeBar}>
+              <div className={styles.timeBar} onClick={handleTimeBarClick}>
                 <div
                   className={styles.progress}
-                  style={{
-                    width: videoRef.current
-                      ? `${
-                          (videoRef.current.currentTime /
-                            videoRef.current.duration) *
-                          100
-                        }%`
-                      : "0%",
-                  }}
+                  style={{ width: `${progress}%` }}
                 ></div>
               </div>
 

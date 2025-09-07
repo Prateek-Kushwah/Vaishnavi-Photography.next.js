@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Play, X, ArrowRight, Youtube } from 'lucide-react';
 import styles from './YouTubeGallery.module.css';
+import Link from 'next/link';
 
 const YouTubeGallery = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -12,7 +13,7 @@ const YouTubeGallery = () => {
   const youtubeVideos = [
     {
       id: 'video1',
-      youtubeId: 'dQw4w9WgXcQ', // Replace with your YouTube video ID
+      youtubeId: 'tv2iAOJ6hr4?si=Um1YkNQg9kISLYwx', // Replace with your YouTube video ID
       title: 'Wedding Photography Highlights',
       description: 'Beautiful moments from our recent wedding shoots',
       duration: '2:45',
@@ -120,7 +121,7 @@ const YouTubeGallery = () => {
 
         <div className={styles.ctaContainer}>
           <a 
-            href="https://www.youtube.com/your-channel" 
+            href="https://www.youtube.com/@vaishnaviphotography71" 
             target="_blank" 
             rel="noopener noreferrer"
             className={styles.ctaButton}

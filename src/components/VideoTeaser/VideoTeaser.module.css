@@ -161,6 +161,7 @@
   border-radius: 2px;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
 }
 
 .progress {
@@ -170,16 +171,6 @@
   height: 100%;
   background: var(--gradient-highlight);
   transition: width 0.1s linear;
-}
-
-
-.featureList li:before {
-  content: "•";
-  color: #c084fc;
-  font-size: 1.2rem;
-  position: absolute;
-  left: 0;
-  top: -2px;
 }
 
 /* Responsive adjustments */
@@ -214,6 +205,10 @@
     width: 70px;
     height: 70px;
   }
+  
+  .videoControls {
+    opacity: 1; /* Always show on mobile */
+  }
 }
 
 @media (max-width: 480px) {
@@ -228,9 +223,5 @@
 
   .overlayTitle {
     font-size: 1.3rem;
-  }
-
-  .videoControls {
-    opacity: 1; /* Always show on mobile */
   }
 }
