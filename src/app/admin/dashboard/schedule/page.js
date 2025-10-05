@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { dataService } from '../../../../../lib/dataService';
+import { dataService } from '@/lib/dataService';
 
 export default function ScheduleAppointment() {
   const [selectedDate, setSelectedDate] = useState('');

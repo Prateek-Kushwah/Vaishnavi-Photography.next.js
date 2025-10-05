@@ -3,17 +3,26 @@
 import { useEffect, useState } from "react";
 import styles from "./AppointmentSection.module.css";
 import emailjs from '@emailjs/browser';
+import { dataService } from "@/lib/dataService";
+
+// Helper function to convert 24hr time to AM/PM format
+const formatTimeToAMPM = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const displayHours = hours % 12 || 12;
+  return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+};
 
 export default function AppointmentSection() {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({ 
-    name: '', 
-    phone: '', 
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
     email: '',
     service: '',
     date: '',
     time: '',
-    message: '' 
+    message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
@@ -34,32 +43,37 @@ export default function AppointmentSection() {
     'Other'
   ];
 
-  // ==================== ADMIN AVAILABILITY INTEGRATION ====================
-  
-  // Load admin availability from localStorage
+  // ==================== DATA FETCHING ====================
   useEffect(() => {
-    loadAdminAvailability();
+    const fetchAvailability = async () => {
+      try {
+        const availability = await dataService.getNext20Days();
+        setAdminAvailability(availability);
+      } catch (error) {
+        console.error("Failed to fetch availability:", error);
+      }
+    };
+
+    fetchAvailability();
   }, []);
 
-  const loadAdminAvailability = () => {
-    if (typeof window !== 'undefined') {
-      const stored = JSON.parse(localStorage.getItem('availability') || '[]');
-      setAdminAvailability(stored);
-    }
-  };
-
-  // Function to check if a date is available based on admin settings
+  // Function to check if a date is available
   const isDateAvailable = (dateString) => {
     const date = new Date(dateString);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Check if date is in the past
     if (date < today) return false;
 
-    // Check if date is in admin availability and has time slots
     const availableDate = adminAvailability.find(item => item.date === dateString);
-    return !!availableDate && availableDate.timeSlots.length > 0;
+    return !!availableDate && availableDate.availableSlots.length > 0;
+  };
+
+  // Function to get available time slots for a selected date
+  const getAvailableTimeSlots = (selectedDate) => {
+    if (!selectedDate) return [];
+    const availableDate = adminAvailability.find(item => item.date === selectedDate);
+    return availableDate ? availableDate.availableSlots : [];
   };
 
   // Function to get available dates for a given month
@@ -70,21 +84,13 @@ export default function AppointmentSection() {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const dateString = date.toISOString().split('T')[0];
-      
+
       if (isDateAvailable(dateString)) {
         availableDates.push(day);
       }
     }
 
     return availableDates;
-  };
-
-  // Function to get available time slots for a selected date from admin settings
-  const getAvailableTimeSlots = (selectedDate) => {
-    if (!selectedDate) return [];
-
-    const availableDate = adminAvailability.find(item => item.date === selectedDate);
-    return availableDate ? availableDate.timeSlots : [];
   };
 
   useEffect(() => {
@@ -101,15 +107,13 @@ export default function AppointmentSection() {
       setIsSubmitted(false);
       setShowDatePicker(false);
       setShowTimePicker(false);
-      // Reload availability when opening modal
-      loadAdminAvailability();
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -132,18 +136,18 @@ export default function AppointmentSection() {
 
   const handleDateSelect = (day) => {
     if (isDateDisabled(day)) return;
-    
+
     const date = new Date(selectedYear, selectedMonth, day);
     const formattedDate = date.toISOString().split('T')[0];
-    const displayDate = date.toLocaleDateString('en-US', { 
-      weekday: 'short', 
-      month: 'short', 
+    const displayDate = date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
       day: 'numeric',
       year: 'numeric'
     });
-    
-    setFormData(prev => ({ 
-      ...prev, 
+
+    setFormData(prev => ({
+      ...prev,
       date: formattedDate,
       dateDisplay: displayDate,
       time: '' // Reset time when date changes
@@ -190,10 +194,10 @@ export default function AppointmentSection() {
     // Add days of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const isDisabled = isDateDisabled(day);
-      const isToday = today.getDate() === day && 
-                     today.getMonth() === selectedMonth && 
-                     today.getFullYear() === selectedYear;
-      const isSelected = formData.date && 
+      const isToday = today.getDate() === day &&
+        today.getMonth() === selectedMonth &&
+        today.getFullYear() === selectedYear;
+      const isSelected = formData.date &&
         new Date(formData.date).getDate() === day &&
         new Date(formData.date).getMonth() === selectedMonth &&
         new Date(formData.date).getFullYear() === selectedYear;
@@ -203,11 +207,9 @@ export default function AppointmentSection() {
       days.push(
         <div
           key={day}
-          className={`${styles.calendarDay} ${
-            isDisabled ? styles.calendarDayDisabled : ''
-          } ${isSelected ? styles.calendarDaySelected : ''} ${
-            isToday ? styles.calendarDayToday : ''
-          } ${isAvailable ? styles.calendarDayAvailable : ''}`}
+          className={`${styles.calendarDay} ${isDisabled ? styles.calendarDayDisabled : ''
+            } ${isSelected ? styles.calendarDaySelected : ''} ${isToday ? styles.calendarDayToday : ''
+            } ${isAvailable ? styles.calendarDayAvailable : ''}`}
           onClick={() => !isDisabled && handleDateSelect(day)}
           title={isDisabled ? 'Not available' : 'Available'}
         >
@@ -223,7 +225,7 @@ export default function AppointmentSection() {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = 'Name is required';
-    
+
     // Either phone or email is required, but not both
     if (!formData.phone.trim() && !formData.email.trim()) {
       newErrors.contact = 'Either phone number or email is required';
@@ -235,11 +237,11 @@ export default function AppointmentSection() {
         newErrors.email = 'Please enter a valid email';
       }
     }
-    
+
     if (!formData.service) newErrors.service = 'Please select a service';
     if (!formData.date) newErrors.date = 'Please select a date';
     if (!formData.time) newErrors.time = 'Please select a time';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -254,41 +256,40 @@ export default function AppointmentSection() {
       return;
     }
 
-    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-
-    if (!serviceID || !templateID) {
-      setErrors({ submit: 'Configuration error. Please contact admin.' });
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      await emailjs.send(serviceID, templateID, {
-        from_name: formData.name,
-        from_phone: formData.phone,
-        from_email: formData.email,
-        service_type: formData.service,
-        appointment_date: formData.date,
-        appointment_time: formData.time,
-        message: formData.message || 'No additional message',
-        subject: `New Appointment Booking - ${formData.service}`,
-        to_email: 'gajendrakushwahvideo@gmail.com'
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from_name: formData.name,
+          from_phone: formData.phone,
+          from_email: formData.email,
+          service_type: formData.service,
+          appointment_date: formData.date,
+          appointment_time: formData.time,
+          message: formData.message || 'No additional message',
+          subject: `New Appointment Booking - ${formData.service}`,
+          to_email: 'gajendrakushwahvideo@gmail.com'
+        }),
       });
 
-      // Store appointment in localStorage
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
+      // Then, save appointment to JSON file with "pending" status
       const appointmentData = {
         id: Date.now(),
         ...formData,
+        status: 'pending', // Set status to pending
         bookedAt: new Date().toISOString()
       };
 
-      const existingAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-      localStorage.setItem('appointments', JSON.stringify([...existingAppointments, appointmentData]));
+      await dataService.addAppointment(appointmentData);
 
       setIsSubmitted(true);
     } catch (error) {
-      console.error('Failed to send appointment:', error);
+      console.error('Failed to book appointment:', error);
       setErrors({ submit: 'Failed to book appointment. Please try again.' });
     } finally {
       setIsLoading(false);
@@ -323,7 +324,7 @@ export default function AppointmentSection() {
                   </svg>
                 </div>
                 <h3>Appointment Confirmed!</h3>
-                <p>Your appointment for <strong>{formData.service}</strong> on <strong>{formData.dateDisplay}</strong> at <strong>{formData.time}</strong> has been booked successfully.</p>
+                <p>Your appointment for <strong>{formData.service}</strong> on <strong>{formData.dateDisplay}</strong> at <strong>{formData.time ? formatTimeToAMPM(formData.time) : ''}</strong> has been booked successfully.</p>
                 <p>You will receive a confirmation email shortly.</p>
                 <button className={styles.closeButton} onClick={toggleAppointment}>
                   Close
@@ -409,12 +410,12 @@ export default function AppointmentSection() {
                         <path fillRule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clipRule="evenodd" />
                       </svg>
                     </button>
-                    
+
                     {showDatePicker && adminAvailability.length > 0 && (
                       <div className={styles.datePickerDropdown}>
                         <div className={styles.calendarHeader}>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             className={styles.calendarNavButton}
                             onClick={() => navigateMonth('prev')}
                           >
@@ -425,8 +426,8 @@ export default function AppointmentSection() {
                           <span className={styles.calendarTitle}>
                             {monthNames[selectedMonth]} {selectedYear}
                           </span>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             className={styles.calendarNavButton}
                             onClick={() => navigateMonth('next')}
                           >
@@ -435,13 +436,13 @@ export default function AppointmentSection() {
                             </svg>
                           </button>
                         </div>
-                        
+
                         <div className={styles.calendarWeekdays}>
                           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
                             <div key={day} className={styles.calendarWeekday}>{day}</div>
                           ))}
                         </div>
-                        
+
                         <div className={styles.calendarGrid}>
                           {generateCalendarDays()}
                         </div>
@@ -476,14 +477,14 @@ export default function AppointmentSection() {
                       onClick={() => setShowTimePicker(!showTimePicker)}
                       disabled={!formData.date || currentAvailableTimeSlots.length === 0}
                     >
-                      {formData.time || 
-                        (!formData.date ? 'Select date first' : 
-                         currentAvailableTimeSlots.length === 0 ? 'No times available' : 'Select a time')}
+                      {formData.time ? formatTimeToAMPM(formData.time) :
+                        (!formData.date ? 'Select date first' :
+                          currentAvailableTimeSlots.length === 0 ? 'No times available' : 'Select a time')}
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clipRule="evenodd" />
                       </svg>
                     </button>
-                    
+
                     {showTimePicker && formData.date && currentAvailableTimeSlots.length > 0 && (
                       <div className={styles.timePickerDropdown}>
                         <div className={styles.timeSlotsGrid}>
@@ -491,12 +492,11 @@ export default function AppointmentSection() {
                             <button
                               key={slot}
                               type="button"
-                              className={`${styles.timeSlot} ${
-                                formData.time === slot ? styles.timeSlotSelected : ''
-                              }`}
+                              className={`${styles.timeSlot} ${formData.time === slot ? styles.timeSlotSelected : ''
+                                }`}
                               onClick={() => handleTimeSelect(slot)}
                             >
-                              {slot}
+                              {formatTimeToAMPM(slot)}
                             </button>
                           ))}
                         </div>
@@ -551,9 +551,9 @@ export default function AppointmentSection() {
 
               {errors.submit && <div className={styles.submitError}>{errors.submit}</div>}
 
-              <button 
-                type="submit" 
-                className={styles.submitButton} 
+              <button
+                type="submit"
+                className={styles.submitButton}
                 disabled={isLoading || adminAvailability.length === 0}
               >
                 {isLoading ? (

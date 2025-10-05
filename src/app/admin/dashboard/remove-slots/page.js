@@ -8,8 +8,9 @@ export default function RemoveSlots() {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [blockReason, setBlockReason] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [blockedSlots, setBlockedSlots] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -20,6 +21,7 @@ export default function RemoveSlots() {
 
   const fetchData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await dataService.getData();
       const days = await dataService.getNext20Days();
@@ -27,6 +29,7 @@ export default function RemoveSlots() {
       setBlockedSlots(data.blockedSlots || []);
     } catch (error) {
       console.error('Error fetching data:', error);
+      setError(error.message);
       setNext20Days([]);
       setBlockedSlots([]);
     } finally {
@@ -148,12 +151,9 @@ export default function RemoveSlots() {
               </h2>
               
               <div className={styles.slotsGrid}>
-                {selectedDay.allSlots.map((slot, index) => {
-                  const isAvailable = selectedDay.availableSlots.includes(slot);
-                  const isBlocked = selectedDay.blockedSlots.some(blocked => blocked.startTime === slot);
+                {selectedDay.availableSlots.map((slot, index) => {
+                  const isBlocked = blockedSlots.some(blocked => blocked.startTime === slot && blocked.date === selectedDate);
                   const isSelected = selectedSlots.includes(slot);
-
-                  if (!isAvailable) return null;
 
                   return (
                     <button
@@ -195,11 +195,15 @@ export default function RemoveSlots() {
             {/* Currently Blocked Slots */}
             <div className={styles.blockedSection}>
               <h2>Currently Blocked Slots</h2>
-              {!selectedDay?.blockedSlots?.length ? (
-                <p className={styles.noBlocked}>No slots blocked for this date</p>
+              {loading ? (
+                <p>Loading blocked slots...</p>
+              ) : error ? (
+                <p className={styles.error}>{error}</p>
               ) : (
                 <div className={styles.blockedList}>
-                  {(blockedSlots || []).map((slot, index) => (
+                  {blockedSlots
+                    .filter(slot => slot.date === selectedDate)
+                    .map((slot, index) => (
                     <div key={index} className={styles.blockedItem}>
                       <div className={styles.blockedInfo}>
                         <span className={styles.blockedTime}>{slot.startTime} - {slot.endTime}</span>
@@ -229,7 +233,7 @@ export default function RemoveSlots() {
           <p>Total Available Slots</p>
         </div>
         <div className={styles.stat}>
-          <h3>{next20Days.reduce((total, day) => total + day.blockedSlots.length, 0)}</h3>
+          <h3>{blockedSlots.length}</h3>
           <p>Total Blocked Slots</p>
         </div>
         <div className={styles.stat}>

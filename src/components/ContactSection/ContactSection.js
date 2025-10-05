@@ -1,8 +1,9 @@
 "use client"
 import { useEffect, useState } from "react";
 import styles from "./ContactSection.module.css";
-import emailjs from '@emailjs/browser';
-import AppointmentSection from "@/components/AppointmentSection/AppointmentSection"; // Add this import
+import { dataService } from "@/lib/dataService";
+import AppointmentSection from "@/components/AppointmentSection/AppointmentSection";
+
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
@@ -50,7 +51,7 @@ export default function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLoading) return;
     setIsLoading(true);
@@ -60,23 +61,26 @@ export default function ContactSection() {
       return;
     }
 
-    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-
-    if (!serviceID || !templateID) {
-      console.error("EmailJS Service ID or Template ID not defined.");
-      setErrors({ submit: 'Configuration error. Please contact admin.' });
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      await emailjs.send(serviceID, templateID, {
-        from_name: formData.name,
-        from_phone: formData.phone,
-        message: formData.message,
-        to_email: 'gajendrakushwahvideo@gmail.com'
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from_name: formData.name,
+          from_phone: formData.phone,
+          from_email: formData.email,
+          message: formData.message,
+          subject: `New Contact Message from ${formData.name}`,
+          to_email: 'gajendrakushwahvideo@gmail.com'
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+      
       setIsSubmitted(true);
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -85,6 +89,7 @@ export default function ContactSection() {
       setIsLoading(false);
     }
   };
+
 
   if (isSubmitted) {
     return (

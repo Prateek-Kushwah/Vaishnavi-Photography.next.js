@@ -39,8 +39,8 @@ export const dataService = {
         const isBooked = data.reservedSlots.some(
           slot => 
             slot.date === date &&
-            slot.startTime === currentTime &&
-            slot.status !== 'cancelled'
+            (slot.startTime === currentTime || slot.time === currentTime) &&
+            (slot.status === 'confirmed' || slot.status === 'pending')
         );
 
         if (!isBooked && !data.blockedDates.includes(date)) {
@@ -101,6 +101,56 @@ export const dataService = {
     }
   },
 
+  async getReservedSlots() {
+    try {
+      const data = await this.getData();
+      return data.reservedSlots || [];
+    } catch (error) {
+      console.error('Error fetching reserved slots:', error);
+      return [];
+    }
+  },
+
+  async getWorkingHours() {
+    try {
+      const data = await this.getData();
+      return data.workingHours || { start: "09:00", end: "17:00", slotDuration: 60 };
+    } catch (error) {
+      console.error('Error fetching working hours:', error);
+      return { start: "09:00", end: "17:00", slotDuration: 60 };
+    }
+  },
+
+  async getBlockedSlots() {
+    try {
+      const response = await fetch(`${API_URL}/blocked`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch blocked slots');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching blocked slots:', error);
+      return [];
+    }
+  },
+
+  async updateBlockedSlots(slots) {
+    try {
+      const response = await fetch(`${API_URL}/blocked`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(slots),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update blocked slots');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating blocked slots:', error);
+      throw error;
+    }
+  },
+
   // Get blocked dates
   async getBlockedDates() {
     try {
@@ -146,6 +196,44 @@ export const dataService = {
       });
       
       if (!response.ok) throw new Error('Failed to block date');
+      return await response.json();
+    } catch (error) {
+      console.error('Error blocking date:', error);
+      throw error;
+    }
+  },
+
+  // Update appointment status
+  async updateAppointmentStatus(id, status) {
+    try {
+      const response = await fetch(`${API_URL}/status`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, status })
+      });
+
+      if (!response.ok) throw new Error('Failed to update appointment status');
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating appointment status:', error);
+      throw error;
+    }
+  },
+
+  // Delete appointment
+  async deleteAppointment(id) {
+    try {
+      const response = await fetch(`${API_URL}/delete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      });
+
+      if (!response.ok) throw new Error('Failed to delete appointment');
       return await response.json();
     } catch (error) {
       console.error('Error blocking date:', error);

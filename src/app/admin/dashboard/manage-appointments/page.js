@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { dataService } from '../../../../lib/dataService';
+import { dataService } from '@/lib/dataService';
 
 export default function ManageAppointments() {
   const [appointments, setAppointments] = useState([]);
@@ -14,7 +14,8 @@ export default function ManageAppointments() {
     startTime: '',
     patientName: '',
     patientEmail: '',
-    patientPhone: ''
+    patientPhone: '',
+    message: ''
   });
 
   useEffect(() => {
@@ -91,7 +92,8 @@ export default function ManageAppointments() {
         startTime: '',
         patientName: '',
         patientEmail: '',
-        patientPhone: ''
+        patientPhone: '',
+        message: ''
       });
       setShowAddForm(false);
       fetchAppointments();
@@ -329,7 +331,7 @@ function AppointmentCard({ appointment, onUpdateStatus, onDelete, showConfirm })
   return (
     <div className={styles.appointmentCard}>
       <div className={styles.appointmentHeader}>
-        <h3>{appointment.patientName}</h3>
+        <h3>{appointment.name || appointment.patientName}</h3>
         <span 
           className={styles.statusBadge}
           style={{ 
@@ -362,17 +364,24 @@ function AppointmentCard({ appointment, onUpdateStatus, onDelete, showConfirm })
           </span>
         </div>
         
-        {appointment.patientEmail && (
+        {(appointment.email || appointment.patientEmail) && (
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Email:</span>
-            <span className={styles.detailValue}>{appointment.patientEmail}</span>
+            <span className={styles.detailValue}>{appointment.email || appointment.patientEmail}</span>
           </div>
         )}
         
-        {appointment.patientPhone && (
+        {(appointment.phone || appointment.patientPhone) && (
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Phone:</span>
-            <span className={styles.detailValue}>{appointment.patientPhone}</span>
+            <span className={styles.detailValue}>{appointment.phone || appointment.patientPhone}</span>
+          </div>
+        )}
+
+        {appointment.message && (
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Message:</span>
+            <span className={styles.detailValue}>{appointment.message}</span>
           </div>
         )}
         
