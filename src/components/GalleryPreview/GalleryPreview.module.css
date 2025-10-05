@@ -6,29 +6,27 @@
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 80vw;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
 .title {
-  font-family: "Playfair Display", serif;
-  font-size: 2.5rem;
+  font-family: var(--font-playfair), serif;
+  font-size: 3rem;
   font-weight: 700;
+  color: var(--primary-text);
   text-align: center;
   margin-bottom: 1rem;
-  background: var(--gradient-highlight);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .subtitle {
-  font-family: "Raleway", sans-serif;
-  font-size: 1.2rem;
+  font-family: var(--font-raleway), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--secondary-text);
   text-align: center;
   margin-bottom: 3rem;
-  color: var(--secondary-text);
 }
 
 .galleryContainer {
@@ -92,32 +90,68 @@
   left: 0;
   width: 100%;
   padding: 2rem;
-  color: white;
+  color: var(--white-color);
   z-index: 2;
 }
 
 .imageTitle {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-playfair), serif;
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
+  color: var(--white-color);
 }
 
 .imageDescription {
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-raleway), sans-serif;
   font-size: 1.1rem;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+  color: var(--secondary-text);
 }
 
 .slide.active .imageTitle,
 .slide.active .imageDescription {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Navigation buttons */
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--gradient-cta);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary-text);
+  z-index: 3;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px -10px var(--button-shadow);
+}
+
+.navButton:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+}
+
+.navButton:first-child {
+  left: 20px;
+}
+
+.nextButton {
+  right: 20px;
+  left: auto;
 }
 
 .indicators {
@@ -157,7 +191,7 @@
   color: var(--primary-text);
   text-decoration: none;
   border-radius: 50px;
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-raleway), sans-serif;
   font-weight: 600;
   font-size: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -194,6 +228,11 @@
   .imageDescription {
     font-size: 1rem;
   }
+  
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -207,5 +246,18 @@
   
   .imageTitle {
     font-size: 1.3rem;
+  }
+  
+  .navButton {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .navButton:first-child {
+    left: 10px;
+  }
+  
+  .nextButton {
+    right: 10px;
   }
 }

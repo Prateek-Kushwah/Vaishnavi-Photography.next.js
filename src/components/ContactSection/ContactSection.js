@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import styles from "./ContactSection.module.css";
 import emailjs from '@emailjs/browser';
+import AppointmentSection from "@/components/AppointmentSection/AppointmentSection"; // Add this import
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({ name: '', phone: '', message: '' });
@@ -111,6 +112,9 @@ export default function ContactSection() {
           <p className={styles.subtitle}>
             Ready to bring your next project to life? Reach out and let's create something amazing together.
           </p>
+          
+          {/* Add Appointment Section Button */}
+          <AppointmentSection />
         </div>
 
         <div className={styles.content}>

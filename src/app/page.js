@@ -1,16 +1,18 @@
-import GalleryPreview from "@/components/GalleryPreview/GalleryPreview";
-import Hero from "@/components/Hero/Hero";
-import WhyChooseUs from "@/components/WhyChooseUs/WhyChooseUs";
-import OurShoots from "@/components/OurShoots/OurShoots";
-import Header from "@/components/Header/Header";
-import VideoTeaser from "@/components/VideoTeaser/VideoTeaser";
-import YouTubeGallery from "@/components/YoutubeGallery/YoutubeGallery";
-import OurJourney from "@/components/OurJourney/OurJourney";
-import OurServices from "@/components/OurServices/OurServices";
-import BlackWhite from "@/components/BlackWhite/BlackWhite";
-import Testimonials from "@/components/Testimonials/Testimonials";
-import ContactSection from "../components/ContactSection/ContactSection";
-import Footer from "@/components/Footer/Footer";
+import dynamic from 'next/dynamic'
+
+const GalleryPreview = dynamic(() => import('../components/GalleryPreview/GalleryPreview'))
+const Hero = dynamic(() => import('../components/Hero/Hero'))
+const WhyChooseUs = dynamic(() => import('../components/WhyChooseUs/WhyChooseUs'))
+const OurShoots = dynamic(() => import('../components/OurShoots/OurShoots'))
+const Header = dynamic(() => import('../components/Header/Header'))
+const VideoTeaser = dynamic(() => import('../components/VideoTeaser/VideoTeaser'))
+const YouTubeGallery = dynamic(() => import('../components/YoutubeGallery/YoutubeGallery'))
+const OurJourney = dynamic(() => import('../components/OurJourney/OurJourney'))
+const OurServices = dynamic(() => import('../components/OurServices/OurServices'))
+const BlackWhite = dynamic(() => import('../components/BlackWhite/BlackWhite'))
+const Testimonials = dynamic(() => import('../components/Testimonials/Testimonials'))
+const ContactSection = dynamic(() => import('../components/ContactSection/ContactSection'))
+const Footer = dynamic(() => import('../components/Footer/Footer'))
 
 export default function Home() {
   return (
@@ -26,7 +28,7 @@ export default function Home() {
       <YouTubeGallery />
       <OurJourney />
       <OurServices />
-      <BlackWhite />
+      <BlackWhite imageUrl="https://vaishnaviphotography.com/assets/Preview/gallery-preview/Image%201.webp" />
       <Testimonials />
       <ContactSection />
       <Footer/>

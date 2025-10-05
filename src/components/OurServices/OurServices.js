@@ -1,7 +1,7 @@
 
 "use client"
 // components/OurServices/OurServices.js
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import {
   Camera,
@@ -15,7 +15,8 @@ import {
   ChevronRight,
   Play,
   Pause,
-  Check
+  Check,
+  ArrowRight
 } from 'lucide-react';
 import styles from './OurServices.module.css';
 import Link from 'next/link';
@@ -26,7 +27,7 @@ const OurServices = () => {
   const [animationDirection, setAnimationDirection] = useState('next');
   const intervalRef = useRef(null);
 
-  const services = [
+  const services = useMemo(() => [
     {
       id: 1,
       icon: <Heart size={32} />,
@@ -35,9 +36,10 @@ const OurServices = () => {
       price: "Starting at $1,499",
       duration: "Full day coverage",
       includes: ["Pre-wedding consultation", "8 hours of coverage", "Online gallery", "USB with edited photos"],
-      image: "/services/wedding.jpg",
+      image: "/assets/services/wedding.jpg",
       video: "/services/wedding-teaser.mp4",
-      category: "Premium"
+      category: "Premium",
+      page: "/gallery#wedding"
     },
     {
       id: 2,
@@ -47,9 +49,10 @@ const OurServices = () => {
       price: "Starting at $299",
       duration: "1-2 hours",
       includes: ["Style consultation", "1-2 hour session", "2 outfit changes", "10 edited digital images"],
-      image: "/services/portrait.jpg",
+      image: "/assets/services/portrait.jpg",
       video: "/services/portrait-teaser.mp4",
-      category: "Standard"
+      category: "Standard",
+      page: "/gallery#portrait"
     },
     {
       id: 3,
@@ -59,9 +62,10 @@ const OurServices = () => {
       price: "Starting at $599",
       duration: "3-6 hours",
       includes: ["Pre-event planning", "Professional editing", "Online gallery", "Quick turnaround"],
-      image: "/services/event.jpg",
+      image: "/assets/services/event.jpg",
       video: "/services/event-teaser.mp4",
-      category: "Premium"
+      category: "Premium",
+      page: "/gallery#event"
     },
     {
       id: 4,
@@ -71,9 +75,10 @@ const OurServices = () => {
       price: "Custom pricing",
       duration: "Full day",
       includes: ["Location scouting", "Travel arrangements", "Extended session", "Premium album"],
-      image: "/services/destination.jpg",
+      image: "/assets/services/event.jpg",
       video: "/services/destination-teaser.mp4",
-      category: "Luxury"
+      category: "Luxury",
+      page: "/gallery#destination"
     },
     {
       id: 5,
@@ -83,9 +88,10 @@ const OurServices = () => {
       price: "Starting at $799",
       duration: "Half or full day",
       includes: ["Creative direction", "Professional lighting", "Image licensing", "Fast delivery"],
-      image: "/services/commercial.jpg",
+      image: "/assets/services/commercial.jpg",
       video: "/services/commercial-teaser.mp4",
-      category: "Professional"
+      category: "Professional",
+      page: "/gallery#commercial"
     },
     {
       id: 6,
@@ -95,65 +101,67 @@ const OurServices = () => {
       price: "Starting at $49",
       duration: "24-48 hours",
       includes: ["Color correction", "Retouching", "Background editing", "Multiple revisions"],
-      image: "/services/editing.jpg",
+      image: "/assets/services/editing.jpg",
       video: "/services/editing-teaser.mp4",
-      category: "Standard"
+      category: "Standard",
+      page: "/gallery#photoediting"
     }
-  ];
+  ], []);
 
   // Auto-play functionality
   useEffect(() => {
+    let timeoutId;
     if (isPlaying) {
       intervalRef.current = setInterval(() => {
         setAnimationDirection('next');
         setActiveService((prev) => (prev + 1) % services.length);
       }, 4000);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
     }
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
     };
   }, [isPlaying, services.length]);
 
-  const nextService = () => {
+  const nextService = useCallback(() => {
     setAnimationDirection('next');
     setActiveService((prev) => (prev + 1) % services.length);
     resetAutoPlay();
-  };
+  }, [services.length]);
 
-  const prevService = () => {
+  const prevService = useCallback(() => {
     setAnimationDirection('prev');
     setActiveService((prev) => (prev - 1 + services.length) % services.length);
     resetAutoPlay();
-  };
+  }, [services.length]);
 
-  const resetAutoPlay = () => {
+  const resetAutoPlay = useCallback(() => {
     setIsPlaying(false);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-
-    // Restart auto-play after a delay
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setIsPlaying(true);
     }, 8000);
-  };
 
-  const toggleAutoPlay = () => {
-    setIsPlaying(!isPlaying);
-  };
+    return () => clearTimeout(timeoutId);
+  }, []);
 
-  const goToService = (index) => {
+  const toggleAutoPlay = useCallback(() => {
+    setIsPlaying(prev => !prev);
+  }, []);
+
+  const goToService = useCallback((index) => {
     setAnimationDirection(index > activeService ? 'next' : 'prev');
     setActiveService(index);
     resetAutoPlay();
-  };
+  }, [activeService, resetAutoPlay]);
 
   return (
     <section className={styles.ourServices} id="our-services">
@@ -271,36 +279,20 @@ const OurServices = () => {
               </div>
 
               <div className={styles.ctaButtons}>
-                <Link href={"/#contact"} className={styles.primaryButton}>
+                <Link href={"/#contact"}>
                   <button className={styles.primaryButton}>
-                    Book This Service
+                    <span>Book This Service </span>
+                    <ArrowRight size={20} />
                   </button>
                 </Link>
-                <button className={styles.secondaryButton}>
-                  View Portfolio
-                </button>
+                <Link href={services[activeService].page}>
+                  <button className={styles.secondaryButton}>
+                    <span>View Gallery </span>
+                    <ArrowRight size={20} />
+                  </button>
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className={styles.allServicesGrid}>
-          <h3 className={styles.gridTitle}>Explore All Services</h3>
-          <div className={styles.servicesGrid}>
-            {services.map((service, index) => (
-              <div
-                key={service.id}
-                className={`${styles.serviceCard} ${index === activeService ? styles.activeCard : ''}`}
-                onClick={() => goToService(index)}
-              >
-                <div className={styles.cardIcon}>
-                  {service.icon}
-                </div>
-                <h4 className={styles.cardTitle}>{service.title}</h4>
-                <p className={styles.cardDescription}>{service.description.substring(0, 80)}...</p>
-                <div className={styles.cardPrice}>{service.price}</div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

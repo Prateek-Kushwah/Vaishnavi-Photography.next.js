@@ -1,6 +1,3 @@
-/* Hero.module.css */
-
-/* Main container for the hero section */
 .link{
   text-decoration: none;
   color: var(--primary-text);
@@ -16,9 +13,12 @@
   color: var(--primary-text);
   overflow: hidden;
   text-align: center;
+  will-change: transform;
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-/* Content wrapper */
 .heroContent {
   position: relative;
   z-index: 2;
@@ -27,15 +27,19 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  transform: translateZ(0);
+  will-change: opacity, transform;
 }
 
-/* Main headline styling */
 .headline {
   font-size: clamp(2.5rem, 8vw, 5rem);
+  font-family: var(--font-playfair), var(--font-raleway), sans-serif;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Highlighted text within the headline */
@@ -44,7 +48,35 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Blinking cursor for typewriter effect */
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: clamp(2.5rem, 8vw, 5rem);
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  background-color: var(--primary-text);
+  animation: blink 0.7s infinite;
+  margin-left: 5px;
+  vertical-align: bottom;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
 
 /* Subheadline styling */
 .subheadline {

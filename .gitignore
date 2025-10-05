@@ -11,3 +11,5 @@ public/
 
 # Optional: log files
 *.log
+
+.env.local

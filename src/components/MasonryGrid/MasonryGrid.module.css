@@ -1,0 +1,51 @@
+/* MasonryGrid.module.css - Updated for Pinterest-style layout */
+.masonryGrid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 4), 1fr);
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--primary-bg);
+}
+
+.masonryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.masonryItem {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.masonryItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px var(--button-shadow-hover);
+}
+
+.masonryImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.masonryItem:hover .masonryImage {
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .masonryGrid {
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .masonryColumn {
+    gap: 0.5rem;
+  }
+} 

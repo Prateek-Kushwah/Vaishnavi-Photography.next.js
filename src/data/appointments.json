@@ -1,0 +1,45 @@
+{
+  "appointments": [
+    {
+      "id": 1,
+      "date": "2024-01-15",
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "patientName": "John Doe",
+      "patientEmail": "john@example.com",
+      "patientPhone": "+1234567890",
+      "status": "pending",
+      "createdAt": "2024-01-10T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "date": "2024-01-16",
+      "startTime": "14:00",
+      "endTime": "15:00",
+      "patientName": "Jane Smith",
+      "patientEmail": "jane@example.com",
+      "patientPhone": "+0987654321",
+      "status": "confirmed",
+      "createdAt": "2024-01-11T14:30:00Z"
+    }
+  ],
+  "workingHours": {
+    "start": "09:00",
+    "end": "17:00",
+    "slotDuration": 60
+  },
+  "blockedSlots": [
+    {
+      "date": "2024-01-18",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "reason": "Meeting"
+    },
+    {
+      "date": "2024-01-18", 
+      "startTime": "14:00",
+      "endTime": "15:00",
+      "reason": "Training"
+    }
+  ]
+}

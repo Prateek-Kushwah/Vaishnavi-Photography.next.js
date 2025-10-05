@@ -1,216 +1,23 @@
-/* components/BlackWhite/BlackWhite.module.css */
-.BlackWhite {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .blackWhitePhoto {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 1;
-  }
-  
-  .image {
-    object-fit: cover;
-    filter: grayscale(100%) contrast(120%);
-    transition: transform 0.8s ease, filter 0.8s ease;
-  }
-  
-  .blackWhitePhoto:hover .image {
-    filter: grayscale(80%) contrast(130%);
-    transform: scale(1.05);
-  }
-  
-  .imageOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.3) 50%,
-      rgba(0, 0, 0, 0.7) 100%
-    );
-    z-index: 2;
-  }
-  
-  .centerContent {
-    position: relative;
-    z-index: 3;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    padding: 0 1.5rem;
-  }
-  
-  .textContent {
-    margin-bottom: 3rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease-out 0.5s forwards;
-  }
-  
-  .title {
-    font-family: "Playfair Display", serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-  
-  .subtitle {
-    font-family: "Raleway", sans-serif;
-    font-size: 1.3rem;
-    line-height: 1.6;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .centerButton {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease-out 0.8s forwards;
-  }
-  
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2.5rem;
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-    border-radius: 50px;
-    text-decoration: none;
-    font-family: "Raleway", sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-  }
-  
-  .btn:hover::before {
-    left: 100%;
-  }
-  
-  .btn:hover {
-    background: white;
-    color: black;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  }
-  
-  .scrollIndicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    opacity: 0;
-    animation: fadeIn 1s ease-out 1.5s forwards;
-  }
-  
-  .scrollArrow {
-    width: 30px;
-    height: 30px;
-    border-right: 2px solid white;
-    border-bottom: 2px solid white;
-    transform: rotate(45deg);
-    animation: bounce 2s infinite;
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0) rotate(45deg);
-    }
-    40% {
-      transform: translateY(-10px) rotate(45deg);
-    }
-    60% {
-      transform: translateY(-5px) rotate(45deg);
-    }
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .title {
-      font-size: 2.5rem;
-    }
-    
-    .subtitle {
-      font-size: 1.1rem;
-      padding: 0 1rem;
-    }
-    
-    .btn {
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .title {
-      font-size: 2rem;
-    }
-    
-    .subtitle {
-      font-size: 1rem;
-    }
-    
-    .centerContent {
-      padding: 0 1rem;
-    }
-    
-    .btn {
-      padding: 0.7rem 1.8rem;
-    }
-    
-    .scrollIndicator {
-      bottom: 20px;
-    }
-  }
+.stickyWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.backgroundImage {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+    background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  background-color: var(--gradient-cta);
+}
+
+.content {
+  position: relative;
+}
+

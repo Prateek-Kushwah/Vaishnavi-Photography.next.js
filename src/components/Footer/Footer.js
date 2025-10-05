@@ -91,11 +91,11 @@ export default function Footer() {
           <div className={styles.copyright}>
             <p>&copy; {new Date().getFullYear()} Vaishnavi Photography . All rights reserved.</p>
           </div>
-          {/* <div className={styles.legalLinks}>
+          <div className={styles.legalLinks}>
             <a href="#" className={styles.legalLink}>Privacy Policy</a>
             <a href="#" className={styles.legalLink}>Terms of Service</a>
             <a href="#" className={styles.legalLink}>Cookie Policy</a>
-          </div> */}
+          </div>
         </div>
       </div>
 

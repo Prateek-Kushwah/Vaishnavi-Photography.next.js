@@ -158,9 +158,7 @@
   color: var(--primary-text);
 }
 
-.formGroup input,
-.formGroup select,
-.formGroup textarea {
+.inputField {
   width: 100%;
   padding: 0.8rem 1rem;
   background: rgba(249, 250, 251, 0.08);
@@ -172,27 +170,90 @@
   transition: all 0.3s ease;
 }
 
-.formGroup input:focus,
-.formGroup select:focus,
-.formGroup textarea:focus {
+.inputField:focus {
   outline: none;
   border-color: rgba(168, 85, 247, 0.5);
   background: rgba(249, 250, 251, 0.12);
 }
 
-.formGroup input::placeholder,
-.formGroup textarea::placeholder {
+.inputField::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Style for optgroups in select */
-.formGroup select optgroup {
-  background: var(--primary-bg);
+/* Custom Dropdown Styles */
+.customDropdown {
+  position: relative;
+  width: 100%;
 }
 
-.formGroup select optgroup option {
-  padding: 0.5rem;
-  background: var(--primary-bg);
+.dropdownToggle {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: rgba(249, 250, 251, 0.08);
+  border: 1px solid rgba(249, 250, 251, 0.15);
+  border-radius: 8px;
+  color: var(--primary-text);
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropdownToggle:hover {
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid rgba(249, 250, 251, 0.15);
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.optionGroup {
+  padding: 0.5rem 0;
+}
+
+.optionGroupLabel {
+  padding: 0.5rem 1rem;
+  font-family: "Raleway", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--secondary-text);
+  background: rgba(31, 41, 55, 0.5);
+}
+
+.optionItem {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: var(--primary-text);
+  font-family: "Raleway", sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionItem:hover {
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.optionItemSelected {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--primary-text);
 }
 
 .ratingInput {
@@ -521,6 +582,33 @@
   }
 }
 
+/* Improved Autofill Styles */
+.inputField:-webkit-autofill,
+.inputField:-webkit-autofill:hover,
+.inputField:-webkit-autofill:focus,
+.inputField:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--primary-text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+  border: 1px solid rgba(249, 250, 251, 0.15);
+}
+
+.inputField:-webkit-autofill::first-line {
+  font-family: "Raleway", sans-serif;
+  font-size: 1rem;
+  color: var(--primary-text);
+}
+
+/* For Firefox */
+.inputField:-moz-ui-valid {
+  box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  color: var(--primary-text) !important;
+  background-color: var(--input-bg) !important;
+  border: 1px solid rgba(249, 250, 251, 0.15);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .testimonials {
@@ -559,6 +647,10 @@
   .reviewForm {
     padding: 1.5rem;
   }
+  
+  .dropdownMenu {
+    max-height: 250px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -589,32 +681,8 @@
     margin-top: 0.5rem;
     width: 100%;
   }
+  
+  .dropdownMenu {
+    max-height: 200px;
+  }
 }
-.input:-webkit-autofill,
-  .input:-webkit-autofill:hover,
-  .input:-webkit-autofill:focus,
-  .input:-webkit-autofill:active {
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: var(--primary-text) !important;
-    -webkit-box-shadow: 0 0 0px 1000px #1a2035 inset !important;
-    box-shadow: 0 0 0px 1000px #1a2035 inset !important;
-    transition: background-color 5000s ease-in-out 0s;
-    color: var(--primary-text) !important;
-    background-color: #1a2035 !important;
-    border: none;
-  }
-  
-  /* For Firefox */
-  .input:-moz-ui-valid {
-    box-shadow: 0 0 0px 1000px #1a2035 inset !important;
-    color: var(--primary-text) !important;
-    background-color: #1a2035 !important;
-  }
-  
-  /* Ensure the text color remains visible */
-  .input:-webkit-autofill::first-line {
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    color: var(--primary-text);
-  }
-  

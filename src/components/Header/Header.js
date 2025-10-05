@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -14,10 +14,9 @@ import styles from "./Header.module.css"; // Import the CSS Module
 // Define your navigation links here
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Services", href: "/#our-services" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export function Header() {
@@ -25,10 +24,11 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 10);
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -40,7 +40,7 @@ export function Header() {
   }, [pathname]);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const menuVariants = {
@@ -71,7 +71,7 @@ export function Header() {
             <Link href="/" className={styles.logoLink}>
               <Image
                 src="/logo.svg"
-                alt="YourBrand Logo"
+                alt="Vaishnavi Photography"
                 width={100}
                 height={40}
                 priority
@@ -113,7 +113,7 @@ export function Header() {
                 type="button"
                 className={styles.menuToggle}
               >
-                <span className="sr-only">Open main menu</span>
+                {/* <span className="sr-only">Open main menu</span> */}
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>

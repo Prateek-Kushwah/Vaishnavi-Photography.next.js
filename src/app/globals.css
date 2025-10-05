@@ -1,32 +1,111 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
-
 :root {
+  --black-color: #000000;
+  --white-color: #ffffff;
   --primary-bg: #111827;
   --secondary-bg: #e4e5f1;
-  --card-bg: rgba(31, 41, 55, 0.5); /* Darker, semi-transparent card background */
-  --input-bg: rgba(17, 24, 39, 0.8);  /* Darker input background */
+  --card-bg: rgba(31, 41, 55, 1);
+  --input-bg: rgba(17, 24, 39, 0.8);
   --primary-text: #f9fafb;
   --secondary-text: #d1d5db;
   --gradient-highlight: linear-gradient(90deg, #818cf8, #c084fc);
   --gradient-cta: linear-gradient(90deg, #6366f1, #a855f7);
+  --gradient-primary: linear-gradient(
+    135deg,
+    #6366f1 0%,
+    #8b5cf6 50%,    import { Raleway, Playfair_Display, Poppins } from 'next/font/google';
+    
+    const raleway = Raleway({
+      subsets: ['latin'],
+      display: 'swap',
+      variable: '--font-raleway',
+    });
+    
+    const playfair = Playfair_Display({
+      subsets: ['latin'],
+      display: 'swap',
+      variable: '--font-playfair',
+    });
+    
+    const poppins = Poppins({
+      weight: ['300', '400', '500', '600', '700'],
+      subsets: ['latin'],
+      display: 'swap',
+      variable: '--font-poppins',
+    });
+    
+    export default function RootLayout({ children }) {
+      return (
+        <html lang="en" className={`${raleway.variable} ${playfair.variable} ${poppins.variable}`}>
+          <body>{children}</body>
+        </html>
+      );
+    }
+    #c084fc 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    #3b82f6 0%,
+    #6366f1 50%,
+    #8b5cf6 100%
+  );
   --button-shadow: rgba(168, 85, 247, 0.5);
   --button-shadow-hover: rgba(168, 85, 247, 0.6);
   --shape-purple: #8b5cf6;
   --shape-blue: #3b82f6;
   --shape-pink: #ec4899;
   --hover-color: rgba(168, 85, 247, 0.8);
+  --font-poppins: "Poppins", sans-serif;
+  --font-raleway: "Raleway", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-medium: rgba(255, 255, 255, 0.2);
+  --border-focus: rgba(139, 92, 246, 0.8);
 }
 
-
-*{
-  margin: 0;
+* {
+  box-sizing: border-box;
   padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 body {
+  color: var(--primary-text);
+  background: var(--primary-bg);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-highlight);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hover-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
   margin: 0;
-  font-family: "Playfair Display", "Raleway", "Poppins", sans-serif;
+  /* font-family: "Playfair Display", "Raleway", "Poppins", sans-serif; */
   background: var(--primary-bg);
   color: var(--primary-text);
   background-attachment: fixed;
@@ -50,7 +129,7 @@ body {
 }
 
 .title {
-  font-family: "Playfair Display", "Raleway", "Poppins", sans-serif;
+  font-family: var(--font-playfair), var(--font-raleway), sans-serif;
   font-size: 3em;
   font-weight: 700;
   color: var(--primary-text);
@@ -59,12 +138,19 @@ body {
 }
 
 .subtitle {
-  font-family: "Raleway", "Poppins", sans-serif;
+  font-family: var(--font-raleway), var(--font-poppins), sans-serif;
   font-size: 1.5em;
   font-weight: 300;
   color: var(--secondary-text);
   text-align: center;
   margin-bottom: 2rem;
+}
+
+.description {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 1.5rem;
+  color: var(--secondary-text);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .btn {
@@ -93,22 +179,93 @@ body {
   padding: 2rem;
 }
 
-  .primaryButton {
-    flex: 1;
-    padding: 0.8rem 1.5rem;
-    background: var(--gradient-cta);
-    color: var(--primary-text);
-    border: none;
-    border-radius: 50px;
-    font-family: "Raleway", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 10px 30px -10px var(--button-shadow);
+.primaryButton {
+  flex: 1;
+  padding: 0.8rem 1.5rem;
+  background: var(--gradient-cta);
+  color: var(--primary-text);
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font-raleway), var(--font-poppins), sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px -10px var(--button-shadow);
+}
+
+.primaryButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.textarea:-webkit-autofill,
+.textarea:-webkit-autofill:hover,
+.textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--primary-text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  border-radius: 8px !important;
+}
+
+.inputContainer:focus-within .input:-webkit-autofill,
+.inputContainer:focus-within .textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset,
+    0 0 0 2px var(--shape-purple) !important;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
   }
-  
-  .primaryButton:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
+
+  .description {
+    font-size: 1.2rem;
   }
+}
+
+/* Improved autofill styles in globals.css */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--primary-text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  color: var(--primary-text) !important;
+}
+
+/* Focus states for autofilled inputs */
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset, 
+                      0 0 0 2px var(--shape-purple) !important;
+  border-color: var(--shape-purple) !important;
+}
+
+/* For modern browsers supporting :autofill */
+input:autofill,
+textarea:autofill,
+select:autofill {
+  background-color: var(--input-bg) !important;
+  color: var(--primary-text) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+input:autofill:focus,
+textarea:autofill:focus,
+select:autofill:focus {
+  border-color: var(--shape-purple) !important;
+  outline: none !important;
+}

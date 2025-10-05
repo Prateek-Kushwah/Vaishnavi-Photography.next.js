@@ -1,13 +1,11 @@
 "use client"
-// components/GalleryPreview/GalleryPreview.js
+
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './GalleryPreview.module.css';
 
 const GalleryPreview = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // Sample gallery images (replace with your actual images)
   const galleryImages = [
     {
       id: 1,

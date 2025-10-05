@@ -1,4 +1,4 @@
-/* components/OurServices/OurServices.module.css */
+
 .ourServices {
   padding: 5rem 0;
   background: linear-gradient(135deg, var(--primary-bg) 0%, #1a2238 100%);
@@ -79,7 +79,7 @@
 }
 
 .title {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-playfair);
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -90,7 +90,7 @@
 }
 
 .subtitle {
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-raleway);
   font-size: 1.2rem;
   color: var(--secondary-text);
   max-width: 600px;
@@ -337,7 +337,7 @@
 }
 
 .serviceTitle {
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-raleway);
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--primary-text);
@@ -375,7 +375,7 @@
 }
 
 .includesTitle {
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-raleway);
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -421,19 +421,24 @@
   animation: fadeInUp 0.5s ease-out 1.2s both;
 }
 
-.primaryButton {
+.primaryButton,
+.secondaryButton {
   flex: 1;
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem;
   background: var(--gradient-cta);
   color: var(--primary-text);
   border: none;
   border-radius: 50px;
-  font-family: "Raleway", sans-serif;
+  font-family: var(--font-raleway), sans-serif;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 10px 30px -10px var(--button-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .primaryButton:hover {
@@ -442,17 +447,8 @@
 }
 
 .secondaryButton {
-  flex: 1;
-  padding: 0.8rem 1.5rem;
   background: transparent;
-  color: var(--primary-text);
   border: 1px solid rgba(249, 250, 251, 0.2);
-  border-radius: 50px;
-  font-family: "Raleway", sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .secondaryButton:hover {

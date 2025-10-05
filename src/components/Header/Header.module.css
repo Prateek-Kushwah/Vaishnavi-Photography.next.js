@@ -4,17 +4,20 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100; /* Increased z-index to ensure it stays above other content */
+  z-index: 100;
   transition: background-color 0.3s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
-  background-color: rgba(var(--primary-bg), 0.1);
-  border-bottom: 1px solid rgba(229, 231, 235, 0.5); /* gray-200/50 */
+  background-color: rgba(17, 24, 39, 0.1);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+  will-change: transform;
+  contain: layout style paint;
 }
 
 .navbar.scrolled {
-  background-color: rgba(var(--primary-bg), 0.1);
+  background-color: rgba(17, 24, 39, 0.95);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  -webkit-backdrop-filter: blur(10px);
+  will-change: backdrop-filter;
 }
 
 .navContainer {
@@ -74,7 +77,8 @@
 .navLink {
   position: relative;
   padding: 0.5rem 0.75rem; /* px-3 py-2 */
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.875rem;
+  font-family: var(--font-poppins) , var(--font-raleway) , serif;
   font-weight: 500;
   color: var(--primary-text); /* Using primary-text color */
   text-decoration: none;
@@ -161,6 +165,7 @@
   display: block;
   padding: 0.5rem 0.75rem;
   border-radius: 0.375rem;
+  font-family: var(--font-poppins) , var(--font-raleway) , serif;
   font-size: 1rem; /* text-base */
   font-weight: 500;
   color: var(--primary-text); /* primary-text */

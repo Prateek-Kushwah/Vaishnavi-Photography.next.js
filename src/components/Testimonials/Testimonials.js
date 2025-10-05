@@ -1,7 +1,7 @@
+// Testimonials.js - Updated version with custom dropdown
 "use client"
-// components/Testimonials/Testimonials.js
 import { useState, useEffect, useRef } from 'react';
-import { Star, Quote, ChevronLeft, ChevronRight, Play, Pause, Send } from 'lucide-react';
+import { Star, Quote, ChevronLeft, ChevronRight, Play, Pause, Send, ChevronDown } from 'lucide-react';
 import styles from './Testimonials.module.css';
 
 const Testimonials = () => {
@@ -14,10 +14,12 @@ const Testimonials = () => {
     email: '',
     rating: 0,
     message: '',
-    category: 'Wedding' // Set default category
+    category: 'Wedding'
   });
   const [submitted, setSubmitted] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const intervalRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   const testimonials = [
     {
@@ -61,6 +63,75 @@ const Testimonials = () => {
       category: "Wedding"
     }
   ];
+
+  const categoryOptions = [
+    {
+      group: "Portrait Photography",
+      options: [
+        { value: "Portrait", label: "Portrait Session" },
+        { value: "Family", label: "Family Photography" },
+        { value: "Newborn", label: "Newborn Photography" },
+        { value: "Boudoir", label: "Boudoir Photography" },
+        { value: "Maternity", label: "Maternity Photography" }
+      ]
+    },
+    {
+      group: "Event Photography",
+      options: [
+        { value: "Wedding", label: "Wedding Photography" },
+        { value: "Engagement", label: "Engagement Session" },
+        { value: "Corporate", label: "Corporate Event" },
+        { value: "Birthday", label: "Birthday Party" },
+        { value: "BabyShower", label: "Baby Shower" }
+      ]
+    },
+    {
+      group: "Commercial Photography",
+      options: [
+        { value: "Commercial", label: "Commercial Photography" },
+        { value: "Product", label: "Product Photography" },
+        { value: "RealEstate", label: "Real Estate Photography" },
+        { value: "Food", label: "Food Photography" },
+        { value: "Fashion", label: "Fashion Photography" },
+        { value: "Architecture", label: "Architecture Photography" }
+      ]
+    },
+    {
+      group: "Specialty Photography",
+      options: [
+        { value: "Travel", label: "Travel Photography" },
+        { value: "Nature", label: "Nature & Wildlife" },
+        { value: "Aerial", label: "Aerial Photography" },
+        { value: "Street", label: "Street Photography" },
+        { value: "BlackAndWhite", label: "Black & White Photography" },
+        { value: "Sports", label: "Sports Photography" }
+      ]
+    },
+    {
+      group: "Services",
+      options: [
+        { value: "Videography", label: "Videography Services" },
+        { value: "PhotoEditing", label: "Photo Editing" },
+        { value: "Retouching", label: "Photo Retouching" },
+        { value: "AlbumDesign", label: "Album Design" },
+        { value: "Other", label: "Other Services" }
+      ]
+    }
+  ];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Auto-play functionality
   useEffect(() => {
@@ -131,6 +202,14 @@ const Testimonials = () => {
     }));
   };
 
+  const handleCategorySelect = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      category: value
+    }));
+    setDropdownOpen(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // In a real application, you would send this data to a backend
@@ -166,6 +245,18 @@ const Testimonials = () => {
     ));
   };
 
+  // Find the selected category label
+  const selectedCategoryLabel = () => {
+    for (const group of categoryOptions) {
+      for (const option of group.options) {
+        if (option.value === formData.category) {
+          return option.label;
+        }
+      }
+    }
+    return "Select category";
+  };
+
   return (
     <section className={styles.testimonials} id="testimonials">
       <div className={styles.backgroundElements}>
@@ -196,7 +287,7 @@ const Testimonials = () => {
               
               {submitted ? (
                 <div className={styles.successMessage}>
-                  <p>Thank you for your review! It has been submitted successfully.</p>
+                  <p>Thank you for your review! It has been submitted successfully. Your review will be displayed under 2-3 days</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -211,6 +302,7 @@ const Testimonials = () => {
                         onChange={handleInputChange}
                         required
                         placeholder="Enter your full name"
+                        className={styles.inputField}
                       />
                     </div>
                     
@@ -224,61 +316,46 @@ const Testimonials = () => {
                         onChange={handleInputChange}
                         required
                         placeholder="Enter your email address"
+                        className={styles.inputField}
                       />
                     </div>
                   </div>
                   
                   <div className={styles.formGroup}>
-                    <label htmlFor="category">Service Category</label>
-                    <select
-                      id="category"
-                      name="category"
-                      value={formData.category}
-                      onChange={handleInputChange}
-                      required
+                    <label>Service Category</label>
+                    <div 
+                      className={styles.customDropdown}
+                      ref={dropdownRef}
                     >
-                      <optgroup label="Portrait Photography">
-                        <option value="Portrait">Portrait Session</option>
-                        <option value="Family">Family Photography</option>
-                        <option value="Newborn">Newborn Photography</option>
-                        <option value="Boudoir">Boudoir Photography</option>
-                        <option value="Maternity">Maternity Photography</option>
-                      </optgroup>
+                      <button
+                        type="button"
+                        className={styles.dropdownToggle}
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                      >
+                        <span>{selectedCategoryLabel()}</span>
+                        <ChevronDown size={16} />
+                      </button>
                       
-                      <optgroup label="Event Photography">
-                        <option value="Wedding">Wedding Photography</option>
-                        <option value="Engagement">Engagement Session</option>
-                        <option value="Corporate">Corporate Event</option>
-                        <option value="Birthday">Birthday Party</option>
-                        <option value="BabyShower">Baby Shower</option>
-                      </optgroup>
-                      
-                      <optgroup label="Commercial Photography">
-                        <option value="Commercial">Commercial Photography</option>
-                        <option value="Product">Product Photography</option>
-                        <option value="RealEstate">Real Estate Photography</option>
-                        <option value="Food">Food Photography</option>
-                        <option value="Fashion">Fashion Photography</option>
-                        <option value="Architecture">Architecture Photography</option>
-                      </optgroup>
-                      
-                      <optgroup label="Specialty Photography">
-                        <option value="Travel">Travel Photography</option>
-                        <option value="Nature">Nature & Wildlife</option>
-                        <option value="Aerial">Aerial Photography</option>
-                        <option value="Street">Street Photography</option>
-                        <option value="BlackAndWhite">Black & White Photography</option>
-                        <option value="Sports">Sports Photography</option>
-                      </optgroup>
-                      
-                      <optgroup label="Services">
-                        <option value="Videography">Videography Services</option>
-                        <option value="PhotoEditing">Photo Editing</option>
-                        <option value="Retouching">Photo Retouching</option>
-                        <option value="AlbumDesign">Album Design</option>
-                        <option value="Other">Other Services</option>
-                      </optgroup>
-                    </select>
+                      {dropdownOpen && (
+                        <div className={styles.dropdownMenu}>
+                          {categoryOptions.map((group, groupIndex) => (
+                            <div key={groupIndex} className={styles.optionGroup}>
+                              <div className={styles.optionGroupLabel}>{group.group}</div>
+                              {group.options.map((option, optionIndex) => (
+                                <button
+                                  key={optionIndex}
+                                  type="button"
+                                  className={`${styles.optionItem} ${formData.category === option.value ? styles.optionItemSelected : ''}`}
+                                  onClick={() => handleCategorySelect(option.value)}
+                                >
+                                  {option.label}
+                                </button>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   
                   <div className={styles.formGroup}>
@@ -301,6 +378,7 @@ const Testimonials = () => {
                       rows="4"
                       required
                       placeholder="Share your experience with our photography services..."
+                      className={styles.inputField}
                     ></textarea>
                   </div>
                   
@@ -314,6 +392,7 @@ const Testimonials = () => {
           </div>
         )}
 
+        {/* Rest of the component remains the same */}
         <div className={styles.testimonialContainer}>
           <div className={styles.testimonialContent}>
             <div className={`${styles.testimonialCard} ${styles[animationDirection]}`}>
