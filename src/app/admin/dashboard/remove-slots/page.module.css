@@ -74,16 +74,15 @@
   padding: 2rem;
   margin-bottom: 2rem;
   backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .dateSection h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  background: var(--gradient-highlight);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary-text);
   font-family: var(--font-raleway);
+  font-weight: 600;
 }
 
 .dateSelect {
@@ -112,16 +111,15 @@
   padding: 2rem;
   margin-bottom: 2rem;
   backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .slotsSection h2 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  background: var(--gradient-highlight);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary-text);
   font-family: var(--font-raleway);
+  font-weight: 600;
 }
 
 .slotsGrid {
@@ -140,17 +138,20 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  font-family: var(--font-poppins);
+  font-size: 0.9rem;
 }
 
 .slotButton.available {
   background: var(--gradient-primary);
   border-color: transparent;
   color: var(--white-color);
+  box-shadow: 0 4px 15px var(--button-shadow);
 }
 
 .slotButton.available:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px var(--button-shadow);
+  box-shadow: 0 6px 20px var(--button-shadow-hover);
 }
 
 .slotButton.selected {
@@ -158,12 +159,13 @@
   border-color: transparent;
   color: var(--white-color);
   transform: scale(1.05);
+  box-shadow: 0 6px 20px var(--button-shadow-hover);
 }
 
 .slotButton.blocked {
   background: var(--input-bg);
-  border-color: #ef4444;
-  color: #ef4444;
+  border-color: var(--shape-pink);
+  color: var(--shape-pink);
   cursor: not-allowed;
   opacity: 0.7;
 }
@@ -172,11 +174,12 @@
   position: absolute;
   top: 4px;
   right: 4px;
-  background: #ef4444;
-  color: white;
+  background: var(--shape-pink);
+  color: var(--white-color);
   font-size: 0.6rem;
   padding: 2px 6px;
   border-radius: 8px;
+  font-weight: 500;
 }
 
 .blockForm {
@@ -184,12 +187,14 @@
   border: 1px solid var(--border-medium);
   border-radius: 12px;
   padding: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .blockForm h3 {
   margin-bottom: 1rem;
   color: var(--primary-text);
   font-size: 1.2rem;
+  font-family: var(--font-raleway);
 }
 
 .reasonInput {
@@ -201,11 +206,17 @@
   color: var(--primary-text);
   margin-bottom: 1rem;
   font-family: var(--font-poppins);
+  transition: all 0.3s ease;
 }
 
 .reasonInput:focus {
   outline: none;
   border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.reasonInput::placeholder {
+  color: var(--secondary-text);
 }
 
 .blockButton {
@@ -217,11 +228,14 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: var(--font-poppins);
+  font-size: 1rem;
+  box-shadow: 0 4px 15px var(--button-shadow);
 }
 
 .blockButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px var(--button-shadow);
+  box-shadow: 0 6px 20px var(--button-shadow-hover);
 }
 
 .blockedSection {
@@ -231,25 +245,24 @@
   padding: 2rem;
   margin-bottom: 2rem;
   backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .blockedSection h2 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  background: var(--gradient-highlight);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary-text);
   font-family: var(--font-raleway);
+  font-weight: 600;
 }
 
-.noBlocked {
+.error {
+  color: var(--shape-pink);
   text-align: center;
-  color: var(--secondary-text);
-  padding: 2rem;
-  background: var(--input-bg);
-  border-radius: 12px;
-  border: 1px dashed var(--border-medium);
+  padding: 1rem;
+  background: rgba(236, 72, 153, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--shape-pink);
 }
 
 .blockedList {
@@ -271,6 +284,7 @@
 
 .blockedItem:hover {
   border-color: var(--border-focus);
+  transform: translateY(-1px);
 }
 
 .blockedInfo {
@@ -282,28 +296,32 @@
 .blockedTime {
   font-weight: 600;
   color: var(--primary-text);
+  font-family: var(--font-poppins);
 }
 
 .blockedReason {
   font-size: 0.8rem;
   color: var(--secondary-text);
+  font-family: var(--font-poppins);
 }
 
 .unblockButton {
   padding: 0.5rem 1rem;
   background: transparent;
-  border: 1px solid #ef4444;
+  border: 1px solid var(--shape-pink);
   border-radius: 6px;
-  color: #ef4444;
+  color: var(--shape-pink);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: var(--font-poppins);
 }
 
 .unblockButton:hover {
-  background: #ef4444;
+  background: var(--shape-pink);
   color: var(--white-color);
+  transform: translateY(-1px);
 }
 
 .stats {
@@ -321,6 +339,13 @@
   padding: 1.5rem;
   text-align: center;
   backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
 }
 
 .stat h3 {
@@ -331,12 +356,14 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.5rem;
+  font-family: var(--font-raleway);
 }
 
 .stat p {
   color: var(--secondary-text);
   font-size: 0.9rem;
   margin: 0;
+  font-family: var(--font-poppins);
 }
 
 /* Responsive Design */
@@ -373,6 +400,19 @@
   .unblockButton {
     width: 100%;
   }
+
+  .stats {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .stat {
+    padding: 1rem;
+  }
+
+  .stat h3 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -394,4 +434,38 @@
   .stats {
     grid-template-columns: 1fr;
   }
+
+  .blockForm {
+    padding: 1rem;
+  }
+
+  .blockButton {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* Loading States */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: var(--secondary-text);
+}
+
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-medium);
+  border-top: 2px solid var(--shape-purple);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

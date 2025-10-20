@@ -12,14 +12,6 @@ export default function ContactSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState({ name: false, phone: false, message: false });
 
-  useEffect(() => {
-    if (process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY) {
-      emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY);
-    } else {
-      console.error("EmailJS public key is not defined.");
-    }
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));

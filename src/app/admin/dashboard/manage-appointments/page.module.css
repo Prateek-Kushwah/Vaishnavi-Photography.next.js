@@ -78,6 +78,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: var(--font-poppins);
 }
 
 .addButton:hover {
@@ -95,6 +96,7 @@
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 1;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .addForm h2 {
@@ -105,6 +107,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-family: var(--font-raleway);
+  font-weight: 600;
 }
 
 .formGrid {
@@ -124,6 +127,7 @@
   color: var(--secondary-text);
   font-weight: 500;
   font-size: 0.9rem;
+  font-family: var(--font-poppins);
 }
 
 .input {
@@ -146,12 +150,14 @@
 .input:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  background: rgba(17, 24, 39, 0.5);
 }
 
 .helperText {
   color: var(--secondary-text);
   font-size: 0.8rem;
   margin-top: 0.5rem;
+  font-family: var(--font-poppins);
 }
 
 .formActions {
@@ -169,6 +175,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: var(--font-poppins);
 }
 
 .submitButton:hover {
@@ -194,6 +201,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-family: var(--font-raleway);
+  font-weight: 600;
 }
 
 .loading {
@@ -231,6 +239,7 @@
 .noAppointments p {
   color: var(--secondary-text);
   font-size: 1.1rem;
+  font-family: var(--font-poppins);
 }
 
 .appointmentsGrid {
@@ -248,6 +257,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .appointmentCard::before {
@@ -269,7 +279,7 @@
 .appointmentCard:hover {
   transform: translateY(-5px);
   border-color: var(--border-focus);
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 10px 30px var(--button-shadow);
 }
 
 .appointmentHeader {
@@ -286,6 +296,7 @@
   color: var(--primary-text);
   margin: 0;
   flex: 1;
+  font-family: var(--font-poppins);
 }
 
 .statusBadge {
@@ -296,6 +307,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   flex-shrink: 0;
+  font-family: var(--font-poppins);
 }
 
 .appointmentDetails {
@@ -308,6 +320,7 @@
   align-items: center;
   margin-bottom: 0.5rem;
   padding: 0.25rem 0;
+  font-family: var(--font-poppins);
 }
 
 .detailLabel {
@@ -322,6 +335,7 @@
   font-size: 0.9rem;
   flex: 2;
   text-align: right;
+  font-weight: 400;
 }
 
 .appointmentActions {
@@ -341,30 +355,34 @@
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+  font-family: var(--font-poppins);
 }
 
 .confirmButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px var(--button-shadow);
+  background: var(--gradient-cta);
 }
 
 .pendingButton {
   padding: 0.6rem 1.2rem;
   background: transparent;
-  border: 1px solid #f59e0b;
+  border: 1px solid var(--shape-purple);
   border-radius: 8px;
-  color: #f59e0b;
+  color: var(--shape-purple);
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+  font-family: var(--font-poppins);
 }
 
 .pendingButton:hover {
-  background: #f59e0b;
+  background: var(--shape-purple);
   color: var(--white-color);
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--button-shadow);
 }
 
 .deleteButton {
@@ -378,12 +396,33 @@
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+  font-family: var(--font-poppins);
 }
 
 .deleteButton:hover {
   background: #ef4444;
   color: var(--white-color);
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Status-specific styles using your color variables */
+.statusPending {
+  background: rgba(245, 158, 11, 0.2) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+.statusConfirmed {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+.statusCancelled {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #ef4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
 }
 
 /* Responsive Design */
@@ -455,5 +494,9 @@
   .detailValue {
     text-align: left;
     width: 100%;
+  }
+  
+  .appointmentsGrid {
+    grid-template-columns: 1fr;
   }
 }

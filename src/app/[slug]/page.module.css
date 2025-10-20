@@ -4,47 +4,117 @@
 
 .hero {
   position: relative;
-  height: 60vh;
-  margin-bottom: 3rem;
+  height: 70vh;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .coverImage {
   object-fit: cover;
-  width: 100%;
-  height: 100%;
-  filter: brightness(0.7);
+  object-position: center;
 }
 
 .heroContent {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  max-width: 800px;
   padding: 2rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
 }
 
 .heroContent h1 {
-  font-family: var(--font-playfair) , serif;
   font-size: 3rem;
   margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.heroContent p {
+  font-size: 1.2rem;
+  line-height: 1.6;
 }
 
 .gallery {
-  padding: 2rem;
-  max-width: 1400px;
+  padding: 4rem 2rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .gallery h2 {
-  font-family: var(--font-raleway), sans-serif;
-  margin-bottom: 2rem;
   text-align: center;
-  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: #333;
 }
 
 .empty {
   text-align: center;
-  color: var(--secondary-text);
+  color: #666;
   font-style: italic;
+  padding: 2rem;
+}
+
+.clientInfo {
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+  margin-top: 2rem;
+}
+
+.clientInfo h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.infoItem {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.infoItem h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.infoItem p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+  
+  .heroContent p {
+    font-size: 1rem;
+  }
+  
+  .gallery,
+  .clientInfo {
+    padding: 2rem 1rem;
+  }
+  
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,6 +1,7 @@
 // app/admin/dashboard/page.js
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import { dataService } from '@/lib/dataService';
 
@@ -11,59 +12,83 @@ export default function AdminDashboard() {
     availableSlotsToday: 0
   });
   const [loading, setLoading] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        setLoading(true);
-        const [reservedSlots, workingHours] = await Promise.all([
-          dataService.getReservedSlots(),
-          dataService.getWorkingHours()
-        ]);
-
-        // Calculate total slots per day
-        const generateAllSlots = (hours) => {
-          const slots = [];
-          const start = new Date(`1970-01-01T${hours.start}`);
-          const end = new Date(`1970-01-01T${hours.end}`);
-          const duration = hours.slotDuration;
-
-          let current = new Date(start);
-          while (current < end) {
-            slots.push(current.toTimeString().slice(0, 5));
-            current.setMinutes(current.getMinutes() + duration);
-          }
-          return slots;
-        };
-
-        const totalDailySlots = generateAllSlots(workingHours).length;
-        const today = new Date().toISOString().split('T')[0];
-
-        // Get reserved slots for today
-        const todayReserved = reservedSlots.filter(slot => slot.date === today);
-        const availableToday = totalDailySlots - todayReserved.length;
-
-        // Upcoming appointments (today and future)
-        const upcoming = reservedSlots.filter(slot =>
-          new Date(slot.date + 'T' + slot.startTime) > new Date()
-        ).length;
-
-        setStats({
-          totalAppointments: reservedSlots.length,
-          upcomingAppointments: upcoming,
-          availableSlotsToday: availableToday
-        });
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-      } finally {
-        setLoading(false);
+    const checkAuth = () => {
+      const cookies = document.cookie.split(';');
+      const authCookie = cookies.find(cookie => cookie.trim().startsWith('admin-auth='));
+      
+      if (!authCookie) {
+        router.push('/admin/login');
+        return false;
       }
+      return true;
     };
 
-    fetchStats();
-  }, []);
+    const isAuthenticated = checkAuth();
+    if (isAuthenticated) {
+      setAuthChecked(true);
+      fetchDashboardData();
+    }
+  }, [router]);
 
-  if (loading) {
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true);
+      const [reservedSlots, workingHours] = await Promise.all([
+        dataService.getReservedSlots(),
+        dataService.getWorkingHours()
+      ]);
+
+      // Calculate total slots per day
+      const generateAllSlots = (hours) => {
+        const slots = [];
+        const start = new Date(`1970-01-01T${hours.start}`);
+        const end = new Date(`1970-01-01T${hours.end}`);
+        const duration = hours.slotDuration;
+
+        let current = new Date(start);
+        while (current < end) {
+          slots.push(current.toTimeString().slice(0, 5));
+          current.setMinutes(current.getMinutes() + duration);
+        }
+        return slots;
+      };
+
+      const totalDailySlots = generateAllSlots(workingHours).length;
+      const today = new Date().toISOString().split('T')[0];
+
+      // Get reserved slots for today
+      const todayReserved = reservedSlots.filter(slot => slot.date === today);
+      const availableToday = totalDailySlots - todayReserved.length;
+
+      // Upcoming appointments (today and future)
+      const upcoming = reservedSlots.filter(slot =>
+        new Date(slot.date + 'T' + slot.startTime) > new Date()
+      ).length;
+
+      setStats({
+        totalAppointments: reservedSlots.length,
+        upcomingAppointments: upcoming,
+        availableSlotsToday: availableToday
+      });
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    // Clear the auth cookie
+    document.cookie = 'admin-auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    router.push('/admin/login');
+  };
+
+  // Show loading until auth is checked and data is loaded
+  if (!authChecked || loading) {
     return (
       <div className={styles.dashboard}>
         <div className={styles.loading}>
@@ -77,8 +102,18 @@ export default function AdminDashboard() {
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardHeader}>
-        <h1>Dashboard Overview</h1>
-        <p>Manage your appointments and view availability</p>
+        <div className={styles.headerContent}>
+          <div className={styles.headerText}>
+            <h1>Dashboard Overview</h1>
+            <p>Manage your appointments and view availability</p>
+          </div>
+          <button onClick={handleLogout} className={styles.logoutButton}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={styles.logoutIcon}>
+              <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z" clipRule="evenodd" />
+            </svg>
+            Logout
+          </button>
+        </div>
       </div>
 
       {/* Stats Grid */}
@@ -120,6 +155,8 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Quick Actions */}
       <div className={styles.quickActions}>
         <h2>Quick Actions</h2>
         <div className={styles.actionGrid}>

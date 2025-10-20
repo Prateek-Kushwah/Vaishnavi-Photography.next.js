@@ -9,7 +9,7 @@
 }
 
 .dashboard::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -20%;
@@ -23,7 +23,7 @@
 }
 
 .dashboard::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -30%;
   left: -10%;
@@ -85,7 +85,7 @@
 }
 
 .statCard::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -183,7 +183,7 @@
 }
 
 .actionCard::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: var(--gradient-primary);
@@ -213,6 +213,33 @@
   justify-content: center;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
+}
+.logoutButton {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logoutButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.logoutIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .actionCard:hover .actionIcon {
@@ -271,8 +298,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading p {
@@ -286,46 +317,46 @@
     padding: 1rem;
     overflow: hidden; /* Ensure no overflow on mobile */
   }
-  
+
   .dashboardHeader h1 {
     font-size: 2.2rem;
   }
-  
+
   .dashboardHeader p {
     font-size: 1rem;
   }
-  
+
   .statsGrid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .statCard {
     padding: 1.5rem;
   }
-  
+
   .statIcon {
     width: 50px;
     height: 50px;
   }
-  
+
   .statIcon svg {
     width: 24px;
     height: 24px;
   }
-  
+
   .statInfo h3 {
     font-size: 2rem;
   }
-  
+
   .actionGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .actionCard {
     padding: 2rem 1.5rem;
   }
-  
+
   .actionIcon {
     width: 70px;
     height: 70px;
@@ -336,15 +367,19 @@
   .dashboardHeader h1 {
     font-size: 1.8rem;
   }
-  
+
   .statCard {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
+
   .quickActions h2 {
     font-size: 1.5rem;
     text-align: center;
+  }
+  .logoutButton {
+    align-self: flex-end;
+    width: auto;
   }
 }

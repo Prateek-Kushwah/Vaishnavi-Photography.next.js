@@ -131,6 +131,18 @@
       "startTime": "15:00",
       "endTime": "16:00",
       "reason": "I am Happy"
+    },
+    {
+      "date": "2025-10-07",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "reason": "Unavailable"
+    },
+    {
+      "date": "2025-10-07",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "reason": "Unavailable"
     }
   ]
 }

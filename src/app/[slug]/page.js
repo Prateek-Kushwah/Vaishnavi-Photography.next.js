@@ -18,31 +18,77 @@ export default async function ClientPage({ params }) {
     notFound()
   }
 
+  // Generate structured data for rich snippets
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    'name': client.name,
+    'description': client.bio,
+    'image': client.coverImage,
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': `https://vaishnaviphotography.com/${client.page}`
+    }
+  }
+
   return (
     <>
+      {/* Structured data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
       <Header />
       <main className={styles.main}>
-        <div className={styles.hero}>
+        {/* Enhanced hero section with semantic HTML */}
+        <header className={styles.hero} role="banner">
           <Image
             src={client.coverImage}
-            alt={client.name}
+            alt={`Cover image for ${client.name} - ${client.bio}`}
             priority
             className={styles.coverImage}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+            quality={85}
           />
           <div className={styles.heroContent}>
-            <h1>{client.name}</h1>
-            <p>{client.bio}</p>
+            <h1 itemProp="name">{client.name}</h1>
+            <p itemProp="description">{client.bio}</p>
           </div>
-        </div>
+        </header>
 
-        <section className={styles.gallery}>
-          <h2>Gallery</h2>
+        {/* Gallery section with semantic markup */}
+        <section 
+          className={styles.gallery} 
+          aria-labelledby="gallery-heading"
+          itemScope
+          itemType="https://schema.org/ImageGallery"
+        >
+          <h2 id="gallery-heading">Gallery</h2>
           {client.images.length > 0 ? (
-            <MasonryGrid images={(client.images)} />
+            <MasonryGrid 
+              images={client.images}
+              aria-label={`Image gallery for ${client.name}`}
+            />
           ) : (
             <p className={styles.empty}>No images yet</p>
           )}
+        </section>
+
+        {/* Additional client information section for better content depth */}
+        <section className={styles.clientInfo}>
+          <h2>About {client.name}</h2>
+          <div className={styles.infoGrid}>
+            <div className={styles.infoItem}>
+              <h3>Project Details</h3>
+              <p>Explore our collaborative work and creative journey with {client.name}.</p>
+            </div>
+            <div className={styles.infoItem}>
+              <h3>Portfolio</h3>
+              <p>View our complete collection of work and creative solutions.</p>
+            </div>
+          </div>
         </section>
       </main>
       <Footer />
@@ -63,11 +109,79 @@ export async function generateMetadata({ params }) {
   if (!client) {
     return {
       title: 'Client Not Found',
+      description: 'The requested client portfolio could not be found.',
     }
   }
 
+  // Enhanced metadata with additional SEO fields
   return {
-    title: client.name,
+    title: `${client.name} - Portfolio | Your Company Name`,
     description: client.bio,
+    keywords: `${client.name}, portfolio, photography, creative work, gallery`,
+    authors: [{ name: 'Your Company Name' }],
+    creator: 'Your Company Name',
+    publisher: 'Your Company Name',
+    
+    // Open Graph metadata
+    openGraph: {
+      title: `${client.name} - Portfolio | Your Company Name`,
+      description: client.bio,
+      url: `https://yourdomain.com/clients/${client.page}`,
+      siteName: 'Your Company Name',
+      images: [
+        {
+          url: client.coverImage,
+          width: 1200,
+          height: 630,
+          alt: `Cover image for ${client.name}`,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+
+    // Twitter Card metadata
+    twitter: {
+      card: 'summary_large_image',
+      title: `${client.name} - Portfolio | Your Company Name`,
+      description: client.bio,
+      creator: '@yourtwitterhandle',
+      images: [client.coverImage],
+    },
+
+    // Additional metadata
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+
+    // Canonical URL
+    alternates: {
+      canonical: `https://yourdomain.com/clients/${client.page}`,
+    },
+
+    // Verification for search consoles (optional)
+    verification: {
+      google: 'your-google-verification-code',
+      yandex: 'your-yandex-verification-code',
+      yahoo: 'your-yahoo-verification-code',
+    },
   }
+}
+
+// Generate sitemap configuration (optional but recommended)
+export async function generateSitemap() {
+  return clients.map((client) => ({
+    url: `https://yourdomain.com/clients/${client.page}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
 }

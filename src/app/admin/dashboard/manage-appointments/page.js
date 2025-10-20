@@ -142,24 +142,19 @@ export default function ManageAppointments() {
   };
 
   const getStatusBadge = (status) => {
-    const statusConfig = {
-      pending: { color: '#f59e0b', text: 'Pending' },
-      confirmed: { color: '#10b981', text: 'Confirmed' },
-      cancelled: { color: '#ef4444', text: 'Cancelled' }
+    const statusClasses = {
+      pending: styles.statusPending,
+      confirmed: styles.statusConfirmed,
+      cancelled: styles.statusCancelled
     };
     
-    const config = statusConfig[status] || statusConfig.pending;
+    const className = `${styles.statusBadge} ${statusClasses[status] || styles.statusPending}`;
     
     return (
-      <span 
-        className={styles.statusBadge}
-        style={{ 
-          background: `${config.color}20`,
-          color: config.color,
-          border: `1px solid ${config.color}30`
-        }}
-      >
-        {config.text}
+      <span className={className}>
+        {status === 'pending' ? 'Pending' : 
+         status === 'confirmed' ? 'Confirmed' : 
+         status === 'cancelled' ? 'Cancelled' : 'Pending'}
       </span>
     );
   };
@@ -258,6 +253,17 @@ export default function ManageAppointments() {
                   placeholder="Enter patient phone"
                 />
               </div>
+
+              <div className={styles.formGroup}>
+                <label>Message</label>
+                <textarea
+                  value={newAppointment.message}
+                  onChange={(e) => setNewAppointment({...newAppointment, message: e.target.value})}
+                  className={styles.input}
+                  placeholder="Additional notes or message"
+                  rows="3"
+                />
+              </div>
             </div>
 
             <div className={styles.formActions}>
@@ -328,19 +334,22 @@ export default function ManageAppointments() {
 
 // Appointment Card Component
 function AppointmentCard({ appointment, onUpdateStatus, onDelete, showConfirm }) {
+  const statusClasses = {
+    pending: styles.statusPending,
+    confirmed: styles.statusConfirmed,
+    cancelled: styles.statusCancelled
+  };
+  
+  const statusClass = `${styles.statusBadge} ${statusClasses[appointment.status] || styles.statusPending}`;
+  
   return (
     <div className={styles.appointmentCard}>
       <div className={styles.appointmentHeader}>
         <h3>{appointment.name || appointment.patientName}</h3>
-        <span 
-          className={styles.statusBadge}
-          style={{ 
-            background: appointment.status === 'confirmed' ? '#10b98120' : '#f59e0b20',
-            color: appointment.status === 'confirmed' ? '#10b981' : '#f59e0b',
-            border: `1px solid ${appointment.status === 'confirmed' ? '#10b98130' : '#f59e0b30'}`
-          }}
-        >
-          {appointment.status}
+        <span className={statusClass}>
+          {appointment.status === 'pending' ? 'Pending' : 
+           appointment.status === 'confirmed' ? 'Confirmed' : 
+           appointment.status === 'cancelled' ? 'Cancelled' : 'Pending'}
         </span>
       </div>
       
@@ -371,6 +380,13 @@ function AppointmentCard({ appointment, onUpdateStatus, onDelete, showConfirm })
           </div>
         )}
         
+        {(appointment.service) && (
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Service:</span>
+            <span className={styles.detailValue}>{appointment.service}</span>
+          </div>
+        )}
+        
         {(appointment.phone || appointment.patientPhone) && (
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Phone:</span>
@@ -388,7 +404,7 @@ function AppointmentCard({ appointment, onUpdateStatus, onDelete, showConfirm })
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>Created:</span>
           <span className={styles.detailValue}>
-            {new Date(appointment.createdAt).toLocaleDateString()}
+            {appointment.createdAt ? new Date(appointment.createdAt).toLocaleDateString() : 'N/A'}
           </span>
         </div>
       </div>
@@ -403,12 +419,25 @@ function AppointmentCard({ appointment, onUpdateStatus, onDelete, showConfirm })
           </button>
         )}
         
-        {!showConfirm && (
+        {!showConfirm && appointment.status !== 'cancelled' && (
           <button
             onClick={() => onUpdateStatus(appointment.id, 'pending')}
             className={styles.pendingButton}
           >
             Mark Pending
+          </button>
+        )}
+        
+        {appointment.status !== 'cancelled' && (
+          <button
+            onClick={() => onUpdateStatus(appointment.id, 'cancelled')}
+            className={styles.pendingButton}
+            style={{ 
+              borderColor: '#ef4444', 
+              color: '#ef4444' 
+            }}
+          >
+            Cancel
           </button>
         )}
         

@@ -28,7 +28,7 @@ export default function Home() {
       <YouTubeGallery />
       <OurJourney />
       <OurServices />
-      <BlackWhite imageUrl="https://vaishnaviphotography.com/assets/Preview/gallery-preview/Image%201.webp" />
+      <BlackWhite imageUrl="../../public/BlackWhite/image.jpg" />
       <Testimonials />
       <ContactSection />
       <Footer/>

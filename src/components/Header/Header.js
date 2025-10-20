@@ -9,9 +9,8 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
-import styles from "./Header.module.css"; // Import the CSS Module
+import styles from "./Header.module.css";
 
-// Define your navigation links here
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Gallery", href: "/gallery" },

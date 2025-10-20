@@ -15,15 +15,29 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
 
-    // Simple authentication
-    if (credentials.username === 'admin' && credentials.password === 'secret123') {
-      // Set session cookie
-      document.cookie = 'admin-auth=authenticated; path=/; max-age=86400'; // 24 hours
-      router.push('/admin/dashboard');
-    } else {
-      setError('Invalid credentials');
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Set session cookie
+        document.cookie = 'admin-auth=authenticated; path=/; max-age=86400'; // 24 hours
+        router.push('/admin/dashboard');
+      } else {
+        setError(data.error || 'Invalid credentials');
+      }
+    } catch (error) {
+      setError('Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -64,11 +78,7 @@ export default function AdminLogin() {
           </button>
         </form>
         
-        <div className={styles.loginNote}>
-          <p><strong>Default credentials:</strong></p>
-          <p>Username: admin</p>
-          <p>Password: secret123</p>
-        </div>
+        {/* Remove the default credentials note since we're using env variables */}
       </div>
     </div>
   );

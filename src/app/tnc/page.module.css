@@ -1,0 +1,276 @@
+/* app/terms-and-conditions/TermsAndConditions.module.css */
+.termsAndConditions {
+  min-height: 100vh;
+  background: var(--primary-bg);
+}
+
+/* Header Styles */
+.termsHeader {
+  position: relative;
+  padding: 5rem 1rem;
+  overflow: hidden;
+  background: var(--gradient-secondary);
+}
+
+.headerContent {
+  max-width: 72rem;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.headerTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-playfair);
+  color: var(--white-color);
+}
+
+@media (min-width: 768px) {
+  .headerTitle {
+    font-size: 4.5rem;
+  }
+}
+
+.headerSubtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  max-width: 48rem;
+  margin: 0 auto;
+  font-family: var(--font-raleway);
+  color: var(--white-color);
+}
+
+/* Background Shapes */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.shapePurple {
+  top: 2.5rem;
+  left: 2.5rem;
+  width: 5rem;
+  height: 5rem;
+  background: var(--shape-purple);
+}
+
+.shapeBlue {
+  top: 50%;
+  right: 10%;
+  width: 6rem;
+  height: 6rem;
+  background: var(--shape-blue);
+}
+
+.shapePink {
+  bottom: 3rem;
+  left: 20%;
+  width: 4rem;
+  height: 4rem;
+  background: var(--shape-pink);
+}
+
+/* Main Content */
+.termsMain {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.termsCard {
+  background: var(--card-bg);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-light);
+}
+
+@media (min-width: 768px) {
+  .termsCard {
+    padding: 3rem;
+  }
+}
+
+/* Last Updated */
+.lastUpdated {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-light);
+}
+
+.lastUpdated p {
+  font-family: var(--font-poppins);
+  color: var(--secondary-text);
+}
+
+/* Introduction */
+.introduction {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--input-bg);
+  border-left: 4px solid var(--shape-purple);
+}
+
+.introduction p {
+  font-family: var(--font-raleway);
+  color: var(--secondary-text);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* Terms Sections */
+.termsSections {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.termsSection {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.sectionNumber {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  background: var(--gradient-highlight);
+  font-family: var(--font-poppins);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  font-family: var(--font-playfair);
+  color: var(--primary-text);
+}
+
+@media (min-width: 768px) {
+  .sectionTitle {
+    font-size: 1.875rem;
+  }
+}
+
+.sectionContent {
+  margin-left: 4rem;
+  font-family: var(--font-raleway);
+  color: var(--secondary-text);
+  line-height: 1.8;
+}
+
+.sectionContent > * + * {
+  margin-top: 1rem;
+}
+
+.contentList {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-left: 1rem;
+}
+
+.contentList > li {
+  margin-bottom: 0.5rem;
+}
+
+/* Acceptance Section */
+.acceptanceSection {
+  margin: 3rem 0;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--border-focus);
+  background: var(--input-bg);
+}
+
+.acceptanceTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-family: var(--font-playfair);
+  color: var(--primary-text);
+}
+
+.acceptanceText {
+  font-family: var(--font-raleway);
+  color: var(--secondary-text);
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+/* Contact Section */
+.contactSection {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background: var(--gradient-primary);
+  font-family: var(--font-poppins);
+}
+
+.contactTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-family: var(--font-playfair);
+  color: white;
+}
+
+.contactText {
+  color: white;
+  opacity: 0.9;
+}
+
+.contactEmail {
+  text-decoration: underline;
+}
+
+/* Footer */
+.termsFooter {
+  padding: 2rem 1rem;
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+}
+
+.footerContent {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-family: var(--font-poppins);
+  color: var(--white-color);
+  background: var(--gradient-cta);
+  box-shadow: 0 4px 14px 0 var(--button-shadow);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.backButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px 0 var(--button-shadow-hover);
+}
