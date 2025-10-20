@@ -1,10 +1,13 @@
-// Testimonials.js - Updated version with custom dropdown
 "use client"
 import { useState, useEffect, useRef } from 'react';
 import { Star, Quote, ChevronLeft, ChevronRight, Play, Pause, Send, ChevronDown } from 'lucide-react';
 import styles from './Testimonials.module.css';
+import testimonials from '../../data/testimonial.json'
+// const [isLoading, setIsLoading] = useState(false);
+import { reviewService } from "@/lib/reviewService";
 
 const Testimonials = () => {
+  const [approvedTestimonials, setApprovedTestimonials] = useState([]);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [animationDirection, setAnimationDirection] = useState('next');
@@ -13,7 +16,7 @@ const Testimonials = () => {
     name: '',
     email: '',
     rating: 0,
-    message: '',
+    content: '',
     category: 'Wedding'
   });
   const [submitted, setSubmitted] = useState(false);
@@ -21,48 +24,15 @@ const Testimonials = () => {
   const intervalRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Sarah & Michael",
-      role: "Wedding Clients",
-      content: "Vaishnavi captured our wedding day perfectly! The photos are absolutely stunning and truly reflect the emotions of the day. We couldn't be happier with the results and will cherish these memories forever.",
-      rating: 5,
-      category: "Wedding"
-    },
-    {
-      id: 2,
-      name: "James Wilson",
-      role: "Portrait Session",
-      content: "The portrait session was amazing! Vaishnavi made me feel so comfortable and the final images exceeded all my expectations. Professional, creative, and delivered exactly what I wanted.",
-      rating: 5,
-      category: "Portrait"
-    },
-    {
-      id: 3,
-      name: "Jennifer Martinez",
-      role: "Event Photography",
-      content: "We hired Vaishnavi for our corporate event and were blown away by the quality of photos. She captured every important moment with such artistry. Highly recommended!",
-      rating: 5,
-      category: "Event"
-    },
-    {
-      id: 4,
-      name: "Robert Chen",
-      role: "Commercial Client",
-      content: "Working with Vaishnavi on our product photography was a game-changer. Her attention to detail and creative vision helped our brand stand out. Exceptional work!",
-      rating: 5,
-      category: "Commercial"
-    },
-    {
-      id: 5,
-      name: "Emily & David",
-      role: "Destination Wedding",
-      content: "Our destination wedding photos are absolutely magical! Vaishnavi traveled with us and captured the most beautiful moments against stunning backdrops. Worth every penny!",
-      rating: 5,
-      category: "Wedding"
+  // Filter only approved testimonials
+  useEffect(() => {
+    const approved = testimonials.filter(testimonial => testimonial.status === 'approved');
+    setApprovedTestimonials(approved);
+    // Reset active testimonial if needed
+    if (activeTestimonial >= approved.length) {
+      setActiveTestimonial(0);
     }
-  ];
+  }, [testimonials, activeTestimonial]);
 
   const categoryOptions = [
     {
@@ -133,12 +103,12 @@ const Testimonials = () => {
     };
   }, []);
 
-  // Auto-play functionality
+  // Auto-play functionality - updated to use approvedTestimonials
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && approvedTestimonials.length > 0) {
       intervalRef.current = setInterval(() => {
         setAnimationDirection('next');
-        setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+        setActiveTestimonial((prev) => (prev + 1) % approvedTestimonials.length);
       }, 5000);
     } else {
       if (intervalRef.current) {
@@ -151,17 +121,21 @@ const Testimonials = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPlaying, testimonials.length]);
+  }, [isPlaying, approvedTestimonials.length]);
 
   const nextTestimonial = () => {
+    if (approvedTestimonials.length === 0) return;
+    
     setAnimationDirection('next');
-    setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    setActiveTestimonial((prev) => (prev + 1) % approvedTestimonials.length);
     resetAutoPlay();
   };
 
   const prevTestimonial = () => {
+    if (approvedTestimonials.length === 0) return;
+    
     setAnimationDirection('prev');
-    setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setActiveTestimonial((prev) => (prev - 1 + approvedTestimonials.length) % approvedTestimonials.length);
     resetAutoPlay();
   };
 
@@ -170,7 +144,7 @@ const Testimonials = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    
+
     // Restart auto-play after a delay
     setTimeout(() => {
       setIsPlaying(true);
@@ -182,6 +156,8 @@ const Testimonials = () => {
   };
 
   const goToTestimonial = (index) => {
+    if (approvedTestimonials.length === 0) return;
+    
     setAnimationDirection(index > activeTestimonial ? 'next' : 'prev');
     setActiveTestimonial(index);
     resetAutoPlay();
@@ -210,24 +186,31 @@ const Testimonials = () => {
     setDropdownOpen(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real application, you would send this data to a backend
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    
-    // Reset form after submission
-    setTimeout(() => {
+    try {
+      const testimonialData = {
+        id: Date.now(),
+        ...formData,
+        status: 'pending',
+        bookedAt: new Date().toISOString()
+      };
+
+      await reviewService.submitReview(testimonialData);
+
+      setSubmitted(true);
+      // Reset form
       setFormData({
         name: '',
         email: '',
         rating: 0,
-        message: '',
+        content: '',
         category: 'Wedding'
       });
-      setSubmitted(false);
-      setShowForm(false);
-    }, 3000);
+    } catch (error) {
+      console.error('Failed to submit review:', error);
+      // You might want to set an error state here to show to the user
+    }
   };
 
   const renderStars = (rating, interactive = false, onClick = null) => {
@@ -257,6 +240,9 @@ const Testimonials = () => {
     return "Select category";
   };
 
+  // Don't render the carousel if there are no approved testimonials
+  const hasApprovedTestimonials = approvedTestimonials.length > 0;
+
   return (
     <section className={styles.testimonials} id="testimonials">
       <div className={styles.backgroundElements}>
@@ -271,7 +257,7 @@ const Testimonials = () => {
           <p className={styles.subtitle}>
             Hear what our clients have to say about their experience
           </p>
-          <button 
+          <button
             className={styles.addReviewButton}
             onClick={() => setShowForm(!showForm)}
           >
@@ -284,10 +270,10 @@ const Testimonials = () => {
           <div className={styles.reviewFormContainer}>
             <div className={styles.reviewForm}>
               <h3 className={styles.formTitle}>Share Your Experience</h3>
-              
+
               {submitted ? (
                 <div className={styles.successMessage}>
-                  <p>Thank you for your review! It has been submitted successfully. Your review will be displayed under 2-3 days</p>
+                  <p>Thank you for your review! It has been submitted successfully. Your review will be displayed under 12 hours</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -305,7 +291,7 @@ const Testimonials = () => {
                         className={styles.inputField}
                       />
                     </div>
-                    
+
                     <div className={styles.formGroup}>
                       <label htmlFor="email">Your Email</label>
                       <input
@@ -320,10 +306,10 @@ const Testimonials = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className={styles.formGroup}>
                     <label>Service Category</label>
-                    <div 
+                    <div
                       className={styles.customDropdown}
                       ref={dropdownRef}
                     >
@@ -335,7 +321,7 @@ const Testimonials = () => {
                         <span>{selectedCategoryLabel()}</span>
                         <ChevronDown size={16} />
                       </button>
-                      
+
                       {dropdownOpen && (
                         <div className={styles.dropdownMenu}>
                           {categoryOptions.map((group, groupIndex) => (
@@ -357,7 +343,7 @@ const Testimonials = () => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className={styles.formGroup}>
                     <label>Your Rating</label>
                     <div className={styles.ratingInput}>
@@ -367,13 +353,13 @@ const Testimonials = () => {
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className={styles.formGroup}>
                     <label htmlFor="message">Your Review</label>
                     <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
+                      id="content"
+                      name="content"
+                      value={formData.content}
                       onChange={handleInputChange}
                       rows="4"
                       required
@@ -381,8 +367,8 @@ const Testimonials = () => {
                       className={styles.inputField}
                     ></textarea>
                   </div>
-                  
-                  <button type="submit" className={styles.submitButton}>
+
+                  <button type="submit" className={styles.submitButton} onClick={handleSubmit}>
                     <Send size={18} />
                     <span>Submit Review</span>
                   </button>
@@ -392,78 +378,83 @@ const Testimonials = () => {
           </div>
         )}
 
-        {/* Rest of the component remains the same */}
-        <div className={styles.testimonialContainer}>
-          <div className={styles.testimonialContent}>
-            <div className={`${styles.testimonialCard} ${styles[animationDirection]}`}>
-              <div className={styles.quoteIcon}>
-                <Quote size={32} />
-              </div>
-
-              <div className={styles.testimonialText}>
-                <p className={styles.content}>
-                  "{testimonials[activeTestimonial].content}"
-                </p>
-              </div>
-
-              <div className={styles.clientInfo}>
-                <div className={styles.clientDetails}>
-                  <h3 className={styles.clientName}>
-                    {testimonials[activeTestimonial].name}
-                  </h3>
-                  <p className={styles.clientRole}>
-                    {testimonials[activeTestimonial].role}
+        {/* Testimonial Carousel - Only show if there are approved testimonials */}
+        {hasApprovedTestimonials ? (
+          <div className={styles.testimonialContainer}>
+            <div className={styles.testimonialContent}>
+              <div className={`${styles.testimonialCard} ${styles[animationDirection]}`}>
+                <div className={styles.quoteIcon}>
+                  <Quote size={32} />
+                </div>
+                <div className={styles.testimonialText}>
+                  <p className={styles.content}>
+                    "{approvedTestimonials[activeTestimonial]?.content}"
                   </p>
-                  <div className={styles.rating}>
-                    {renderStars(testimonials[activeTestimonial].rating)}
-                  </div>
-                  <div className={styles.category}>
-                    {testimonials[activeTestimonial].category}
+                </div>
+
+                <div className={styles.clientInfo}>
+                  <div className={styles.clientDetails}>
+                    <h3 className={styles.clientName}>
+                      {approvedTestimonials[activeTestimonial]?.name}
+                    </h3>
+                    <p className={styles.clientRole}>
+                      {approvedTestimonials[activeTestimonial]?.role}
+                    </p>
+                    <div className={styles.rating}>
+                      {renderStars(approvedTestimonials[activeTestimonial]?.rating)}
+                    </div>
+                    <div className={styles.category}>
+                      {approvedTestimonials[activeTestimonial]?.category}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className={styles.controls}>
-            <div className={styles.navButtons}>
-              <button 
-                className={styles.navButton}
-                onClick={prevTestimonial}
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              
-              <button 
-                className={`${styles.playButton} ${isPlaying ? styles.playing : ''}`}
-                onClick={toggleAutoPlay}
-                aria-label={isPlaying ? "Pause auto play" : "Start auto play"}
-              >
-                {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-              </button>
-              
-              <button 
-                className={styles.navButton}
-                onClick={nextTestimonial}
-                aria-label="Next testimonial"
-              >
-                <ChevronRight size={24} />
-              </button>
-            </div>
-
-            <div className={styles.dots}>
-              {testimonials.map((_, index) => (
+            <div className={styles.controls}>
+              <div className={styles.navButtons}>
                 <button
-                  key={index}
-                  className={`${styles.dot} ${index === activeTestimonial ? styles.active : ''}`}
-                  onClick={() => goToTestimonial(index)}
-                  aria-label={`View testimonial ${index + 1}`}
-                />
-              ))}
+                  className={styles.navButton}
+                  onClick={prevTestimonial}
+                  aria-label="Previous testimonial"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+
+                <button
+                  className={`${styles.playButton} ${isPlaying ? styles.playing : ''}`}
+                  onClick={toggleAutoPlay}
+                  aria-label={isPlaying ? "Pause auto play" : "Start auto play"}
+                >
+                  {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                </button>
+
+                <button
+                  className={styles.navButton}
+                  onClick={nextTestimonial}
+                  aria-label="Next testimonial"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </div>
+
+              <div className={styles.dots}>
+                {approvedTestimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.dot} ${index === activeTestimonial ? styles.active : ''}`}
+                    onClick={() => goToTestimonial(index)}
+                    aria-label={`View testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className={styles.noTestimonials}>
+            <p>No approved testimonials available yet. Check back soon!</p>
+          </div>
+        )}
 
         <div className={styles.stats}>
           <div className={styles.stat}>

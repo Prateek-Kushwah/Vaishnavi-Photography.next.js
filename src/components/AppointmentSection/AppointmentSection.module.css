@@ -1,114 +1,127 @@
-.appointmentButton {
+/* AppointmentSection.module.css - Updated with Custom Color Palette */
+.appointmentSection {
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(139, 92, 246, 0.05) 100%);
+  padding: 4rem 1rem;
   position: relative;
-  z-index: 100;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.75rem;
-  background: var(--gradient-cta);
-  color: var(--primary-text);
-  border: none;
-  border-radius: 9999px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  box-shadow: 0 10px 30px -10px var(--button-shadow);
-  text-decoration: none;
-  margin: 1rem 0;
+  overflow: hidden;
+  border-radius: 24px;
+  margin: 3rem 0;
+  border: 1px solid var(--border-light);
+  backdrop-filter: blur(20px);
 }
 
-.appointmentButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
-}
-
-.appointmentButton svg {
-  width: 20px;
-  height: 20px;
-}
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-}
-
-.modalContent {
-  background: var(--card-bg);
-  border-radius: 16px;
-  padding: 2rem;
-  max-width: 600px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-}
-
-.modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.modalHeader h2 {
-  font-family: var(--font-playfair), var(--font-raleway), serif;
-  font-size: 2rem;
-  color: var(--primary-text);
-  margin: 0;
-}
-
-.closeButton {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
+.appointmentSection::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-highlight);
+  opacity: 0.03;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  animation: float 6s ease-in-out infinite;
 }
 
-.closeButton:hover {
-  background: rgba(255, 255, 255, 0.2);
+.appointmentSection::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: var(--gradient-secondary);
+  opacity: 0.02;
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite reverse;
 }
 
-.closeButton svg {
-  width: 20px;
-  height: 20px;
-  color: var(--primary-text);
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.appointmentContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.appointmentHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.appointmentHeader h2 {
+  font-family: var(--font-playfair), serif;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--primary-text) 0%, var(--shape-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.appointmentHeader p {
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 300;
 }
 
 .appointmentForm {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 3rem;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.formSection {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.formSection:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2rem;
+}
+
+.formSection h3 {
+  font-family: var(--font-raleway), sans-serif;
+  font-size: 1.5rem;
+  color: var(--primary-text);
+  margin-bottom: 1.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.formSection h3::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--card-bg);
+  border-radius: 50%;
+  display: inline-block;
 }
 
 .formGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-@media (min-width: 640px) {
-  .formGrid {
-    grid-template-columns: 1fr 1fr;
-  }
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .formGroup {
@@ -117,153 +130,190 @@
   position: relative;
 }
 
-.formGroup label {
+/* Floating Label Styles */
+.inputContainer {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 2px solid var(--border-light);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible;
+}
+
+.inputContainer::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  /* background: var(--gradient-highlight); */
+  background: var(--card-bg);
+  transition: width 0.3s ease;
+}
+
+.inputContainer:focus-within {
+  border-color: var(--border-focus);
+  background: var(--card-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+}
+
+.inputContainer:focus-within::before {
+  width: 100%;
+}
+
+.inputContainer.error {
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.inputContainer.error::before {
+  background: #ef4444;
+}
+
+.label {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary-text);
   font-family: var(--font-raleway), sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--primary-text);
-}
-
-.formGroup input,
-.formGroup select,
-.formGroup textarea {
-  background: var(--input-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  color: var(--primary-text);
-  font-family: var(--font-poppins), sans-serif;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 2;
+  background: transparent;
 }
 
-.formGroup input:focus,
-.formGroup select:focus,
-.formGroup textarea:focus {
-  outline: none;
-  border-color: var(--shape-purple);
-}
-
-.formGroup input.error,
-.formGroup select.error,
-.formGroup textarea.error {
-  border-color: #ef4444;
-}
-
-.errorText {
-  color: #ef4444;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-}
-
-.submitError {
-  color: #ef4444;
-  text-align: center;
-  font-size: 0.9rem;
-  padding: 0.5rem;
-  background: rgba(239, 68, 68, 0.1);
+.label.focused {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--shape-purple);
+  font-weight: 600;
+  background: var(--card-bg);
+  padding: 0 0.5rem;
+  margin-left: -0.5rem;
   border-radius: 4px;
 }
 
-.submitButton {
-  background: var(--gradient-cta);
-  color: white;
+.input,
+.textarea {
+  background: var(--card-bg);
   border: none;
-  border-radius: 8px;
-  padding: 1rem 2rem;
-  font-family: var(--font-raleway), sans-serif;
-  font-weight: 600;
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem 0.75rem;
+  color: var(--primary-text);
+  font-family: var(--font-poppins), sans-serif;
   font-size: 1rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  position: relative;
+  z-index: 1;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+}
+
+.textarea {
+  min-height: 120px;
+  padding-top: 1.75rem;
+}
+
+/* Custom Select Styles */
+.customSelect {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 2px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.customSelect:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+}
+
+.select {
+  background: transparent;
+  border: none;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  color: var(--primary-text);
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 1rem;
+  width: 100%;
+  appearance: none;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.select:focus {
+  outline: none;
+}
+
+.selectLabel {
+  font-family: var(--font-raleway), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--primary-text);
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 15px var(--button-shadow);
 }
 
-.submitButton:hover:not(:disabled) {
-  box-shadow: 0 6px 20px var(--button-shadow-hover);
-  transform: translateY(-2px);
-}
-
-.submitButton:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  background: var(--input-bg);
+.selectArrow {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
   color: var(--secondary-text);
+  transition: transform 0.3s ease;
 }
 
-.spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
+.customSelect:focus-within .selectArrow {
+  color: var(--shape-purple);
+  transform: translateY(-50%) rotate(180deg);
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.selectArrow svg {
+  width: 20px;
+  height: 20px;
 }
 
-.successMessage {
-  text-align: center;
-  padding: 2rem 0;
-}
-
-.successMessage .successIcon {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: var(--gradient-highlight);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.5rem;
-}
-
-.successMessage .successIcon svg {
-  width: 40px;
-  height: 40px;
-  color: white;
-}
-
-.successMessage h3 {
-  font-family: var(--font-playfair), var(--font-raleway), serif;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: var(--primary-text);
-}
-
-.successMessage p {
-  color: var(--secondary-text);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.successMessage strong {
-  color: var(--primary-text);
-}
-
-/* Custom Date Picker Styles */
+/* Custom Date and Time Picker Styles */
 .customDatePicker,
 .customTimePicker {
   position: relative;
 }
 
+.pickerLabel {
+  font-family: var(--font-raleway), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--primary-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .dateInput,
 .timeInput {
   width: 100%;
-  background: var(--input-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  background: var(--card-bg);
+  border: 2px solid var(--border-light);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
   color: var(--primary-text);
   font-family: var(--font-poppins), sans-serif;
   font-size: 1rem;
@@ -271,22 +321,25 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .dateInput:hover:not(:disabled),
 .timeInput:hover:not(:disabled) {
   border-color: var(--border-medium);
+  transform: translateY(-1px);
 }
 
 .dateInput.error,
 .timeInput.error {
-  border-color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.05);
 }
 
 .dateInput:disabled,
 .timeInput:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
@@ -295,8 +348,16 @@
   width: 20px;
   height: 20px;
   color: var(--secondary-text);
+  transition: transform 0.3s ease;
 }
 
+.dateInput:hover svg,
+.timeInput:hover svg {
+  transform: scale(1.1);
+  color: var(--shape-purple);
+}
+
+/* Calendar and Time Picker Dropdowns */
 .datePickerDropdown,
 .timePickerDropdown {
   position: absolute;
@@ -304,12 +365,25 @@
   left: 0;
   right: 0;
   background: var(--card-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  margin-top: 0.5rem;
-  padding: 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: 16px;
+  margin-top: 0.75rem;
+  padding: 1.5rem;
   z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Calendar Styles */
@@ -317,15 +391,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .calendarNavButton {
-  background: var(--input-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-  width: 32px;
-  height: 32px;
+  background: var(--card-bg);
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -336,11 +412,12 @@
 .calendarNavButton:hover {
   background: var(--gradient-highlight);
   border-color: var(--shape-purple);
+  transform: scale(1.05);
 }
 
 .calendarNavButton svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: var(--primary-text);
 }
 
@@ -348,27 +425,30 @@
   font-family: var(--font-raleway), sans-serif;
   font-weight: 600;
   color: var(--primary-text);
+  font-size: 1.1rem;
 }
 
 .calendarWeekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .calendarWeekday {
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--secondary-text);
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .calendarGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .calendarDay,
@@ -377,116 +457,121 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  font-size: 0.875rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .calendarDay {
   background: transparent;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   color: var(--primary-text);
   cursor: pointer;
+  font-weight: 500;
 }
 
 .calendarDay:hover {
   background: var(--gradient-highlight);
   color: white;
   transform: scale(1.05);
+  border-color: var(--shape-purple);
 }
 
 .calendarDaySelected {
   background: var(--gradient-highlight);
   color: white;
   border-color: var(--shape-purple);
+  box-shadow: 0 5px 15px var(--button-shadow);
 }
 
 .calendarDayDisabled {
   color: var(--secondary-text);
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid rgba(239, 68, 68, 0.2);
 }
 
 .calendarDayDisabled:hover {
-  background: transparent;
+  background: rgba(239, 68, 68, 0.1);
   color: var(--secondary-text);
   transform: none;
+  border-color: rgba(239, 68, 68, 0.2);
 }
 
 .calendarDayEmpty {
   background: transparent;
 }
 
+.calendarDayToday {
+  border: 2px solid var(--shape-blue);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.calendarDayAvailable {
+  background: rgba(139, 92, 246, 0.1);
+  border: 2px solid rgba(139, 92, 246, 0.3);
+}
+
+.todayIndicator {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--shape-blue);
+  border-radius: 50%;
+}
+
 /* Time Picker Styles */
 .timeSlotsGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-  max-height: 200px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+  max-height: 250px;
   overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 .timeSlot {
-  background: var(--input-bg);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 0.75rem;
+  background: var(--card-bg);
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  padding: 0.75rem 0.5rem;
   color: var(--primary-text);
   font-family: var(--font-poppins), sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
+  font-weight: 500;
 }
 
 .timeSlot:hover {
   background: var(--gradient-highlight);
   color: white;
   border-color: var(--shape-purple);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--button-shadow);
 }
 
 .timeSlotSelected {
   background: var(--gradient-highlight);
   color: white;
   border-color: var(--shape-purple);
-}
-
-/* Custom scrollbar */
-.timeSlotsGrid::-webkit-scrollbar {
-  width: 6px;
-}
-
-.timeSlotsGrid::-webkit-scrollbar-track {
-  background: var(--input-bg);
-  border-radius: 3px;
-}
-
-.timeSlotsGrid::-webkit-scrollbar-thumb {
-  background: var(--gradient-highlight);
-  border-radius: 3px;
-}
-
-.timeSlotsGrid::-webkit-scrollbar-thumb:hover {
-  background: var(--shape-purple);
-}
-
-/* Modal z-index fixes */
-.modalOverlay {
-  z-index: 9999;
-}
-
-.modalContent {
-  z-index: 10000;
+  box-shadow: 0 5px 15px var(--button-shadow);
 }
 
 /* Calendar Legend */
 .calendarLegend {
   display: flex;
   justify-content: space-between;
-  padding-top: 1rem;
-  gap: 5px;
+  padding-top: 1.5rem;
+  gap: 1rem;
   border-top: 1px solid var(--border-light);
+  margin-top: 1rem;
 }
 
 .legendItem {
@@ -500,82 +585,294 @@
 .legendColor {
   width: 12px;
   height: 12px;
-  border-radius: 2px;
+  border-radius: 3px;
+  border: 2px solid transparent;
 }
 
 .legendToday {
   background: var(--shape-blue);
-  border: 1px solid var(--shape-blue);
+  border-color: var(--shape-blue);
 }
 
 .legendAvailable {
-  background: transparent;
-  border: 1px solid var(--border-light);
+  background: rgba(139, 92, 246, 0.3);
+  border-color: rgba(139, 92, 246, 0.6);
 }
 
 .legendUnavailable {
-  background: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.6);
 }
 
-/* Today Indicator */
-.todayIndicator {
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--shape-blue);
-  border-radius: 50%;
+/* Error Styles */
+.errorText {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.calendarDayToday {
-  position: relative;
-  border: 1px solid var(--shape-blue);
+.errorText::before {
+  content: '⚠';
+  font-size: 0.8rem;
 }
 
-.calendarDayAvailable {
-  background: rgba(139, 92, 246, 0.05);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-}
-
-.calendarDayAvailable:hover {
-  background: var(--gradient-highlight);
-  border-color: var(--shape-purple);
-}
-
-/* Enhanced disabled state */
-.calendarDayDisabled {
+.submitError {
+  color: #ef4444;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 1rem;
   background: rgba(239, 68, 68, 0.1);
-  color: var(--secondary-text);
-  opacity: 0.5;
-  cursor: not-allowed;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.calendarDayDisabled:hover {
-  background: rgba(239, 68, 68, 0.1);
+/* Submit Button */
+.submitButton {
+  background: var(--gradient-cta);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 1.25rem 3rem;
+  font-family: var(--font-raleway), sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 10px 30px var(--button-shadow);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submitButton:hover:not(:disabled) {
+  box-shadow: 0 15px 40px var(--button-shadow-hover);
+  transform: translateY(-3px);
+}
+
+.submitButton:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--card-bg);
   color: var(--secondary-text);
   transform: none;
 }
 
-/* Configuration Notice */
-.configNotice {
-  background: rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  color: #fbbf24;
-  padding: 1rem;
-  border-radius: 8px;
+.submitButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success State */
+.appointmentSuccess {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border: 2px solid rgba(34, 197, 94, 0.2);
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.successContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.successIcon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+}
+
+.successIcon svg {
+  width: 50px;
+  height: 50px;
+  color: white;
+}
+
+.appointmentSuccess h3 {
+  font-family: var(--font-playfair), serif;
+  font-size: 2.5rem;
+  color: var(--primary-text);
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.appointmentSuccess p {
+  color: var(--secondary-text);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.appointmentSuccess strong {
+  color: var(--primary-text);
+  font-weight: 600;
+}
+
+/* Configuration Notice */
+.configNotice {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+  padding: 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
 }
 
 .configNotice svg {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+}
+
+/* Autofill Styles */
+.inputContainer:has(.input:-webkit-autofill) .label,
+.inputContainer:has(.textarea:-webkit-autofill) .label {
+  top: 0;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--shape-purple);
+  font-weight: 600;
+  background: var(--card-bg);
+  padding: 0 0.5rem;
+  margin-left: -0.5rem;
+  border-radius: 4px;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.textarea:-webkit-autofill,
+.textarea:-webkit-autofill:hover,
+.textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--primary-text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  border-radius: 14px !important;
+  border: 2px solid rgba(139, 92, 246, 0.3) !important;
+  padding: 1.5rem 1.25rem 0.75rem !important;
+}
+
+.inputContainer:focus-within .input:-webkit-autofill,
+.inputContainer:focus-within .textarea:-webkit-autofill {
+  -webkit-box-shadow: 
+    0 0 0px 1000px var(--card-bg) inset,
+    0 10px 30px rgba(139, 92, 246, 0.2) !important;
+  border-color: rgba(139, 92, 246, 0.6) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .appointmentSection {
+    padding: 2rem 1rem;
+    margin: 2rem 0;
+  }
+  
+  .appointmentHeader h2 {
+    font-size: 2rem;
+  }
+  
+  .appointmentForm {
+    padding: 2rem 1.5rem;
+  }
+  
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .scheduleGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendarLegend {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .timeSlotsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .label {
+    left: 1rem;
+  }
+  
+  .label.focused {
+    margin-left: -0.25rem;
+  }
+  
+  .input,
+  .textarea {
+    padding: 1.25rem 1rem 0.5rem;
+  }
+}
+
+/* Custom Scrollbar */
+.timeSlotsGrid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.timeSlotsGrid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.timeSlotsGrid::-webkit-scrollbar-thumb {
+  background: var(--gradient-highlight);
+  border-radius: 3px;
+}
+
+.timeSlotsGrid::-webkit-scrollbar-thumb:hover {
+  background: var(--shape-purple);
 }

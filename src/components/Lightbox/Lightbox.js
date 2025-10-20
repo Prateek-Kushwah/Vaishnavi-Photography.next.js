@@ -1,4 +1,3 @@
-// Lightbox.js - Optimized version
 'use client';
 
 import { useEffect, useState } from 'react';

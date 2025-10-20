@@ -5,26 +5,28 @@
   left: 0;
   right: 0;
   z-index: 100;
-  transition: background-color 0.3s ease-in-out,
-    backdrop-filter 0.3s ease-in-out;
+  transition: background-color 0.2s ease-in-out,
+    backdrop-filter 0.2s ease-in-out;
   background-color: rgba(17, 24, 39, 0.1);
   border-bottom: 1px solid rgba(229, 231, 235, 0.5);
-  will-change: transform;
+  will-change: transform, backdrop-filter;
   contain: layout style paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .navbar.scrolled {
-  background-color: rgba(17, 24, 39, 0.95);
+  background-color: rgba(17, 24, 39, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   will-change: backdrop-filter;
 }
 
 .navContainer {
-  max-width: 1280px; /* 7xl */
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 1rem; /* px-4 */
+  padding: 0 1rem;
   transition: all 0.3s ease-in-out;
   padding-top: 1rem; /* py-4 */
   padding-bottom: 1rem; /* py-4 */

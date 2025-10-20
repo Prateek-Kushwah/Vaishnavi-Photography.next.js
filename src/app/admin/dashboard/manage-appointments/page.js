@@ -19,23 +19,33 @@ export default function ManageAppointments() {
   });
 
   useEffect(() => {
-    fetchAppointments();
     // Set default date to today
     const today = new Date().toISOString().split('T')[0];
     setSelectedDate(today);
-  }, []);
+    
+    // Initial fetch of appointments
+    fetchAppointments();
+    
+    // Set up polling interval (every 30 seconds)
+    const intervalId = setInterval(fetchAppointments, 30000);
+    
+    // Cleanup interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array - only run on mount
 
   useEffect(() => {
     if (selectedDate) {
       fetchAvailableSlots(selectedDate);
     }
-  }, [selectedDate]);
+  }, [selectedDate]); // Only run when selectedDate changes
 
   const fetchAppointments = async () => {
-    setLoading(true);
+    // Don't set loading on regular polling updates
+    const isInitialLoad = !appointments.length;
+    if (isInitialLoad) setLoading(true);
+    
     try {
       const data = await dataService.getData();
-      console.log('Fetched appointments data:', data); // Debug log
       const allAppointments = data.reservedSlots;
       
       if (!Array.isArray(allAppointments)) {
@@ -48,13 +58,16 @@ export default function ManageAppointments() {
       const sorted = allAppointments.sort((a, b) => 
         new Date(a.date + 'T' + a.startTime) - new Date(b.date + 'T' + b.startTime)
       );
-      console.log('Sorted appointments:', sorted); // Debug log
-      setAppointments(sorted);
+      
+      // Only update state if data has changed
+      if (JSON.stringify(sorted) !== JSON.stringify(appointments)) {
+        setAppointments(sorted);
+      }
     } catch (error) {
       console.error('Error fetching appointments:', error);
       setAppointments([]); // Set empty array on error
     } finally {
-      setLoading(false);
+      if (isInitialLoad) setLoading(false);
     }
   };
 

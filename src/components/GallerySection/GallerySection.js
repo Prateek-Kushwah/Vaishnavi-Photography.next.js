@@ -1,4 +1,3 @@
-// GallerySection.js - Optimized version
 'use client';
 
 import { useState } from 'react';

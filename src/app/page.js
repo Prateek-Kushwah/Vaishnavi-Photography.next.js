@@ -31,7 +31,7 @@ export default function Home() {
       <BlackWhite imageUrl="../../public/BlackWhite/image.jpg" />
       <Testimonials />
       <ContactSection />
-      <Footer/>
+      <Footer />
     </div>
   );
 }

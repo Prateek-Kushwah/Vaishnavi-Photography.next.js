@@ -2,18 +2,41 @@
 const API_URL = '/api/appointments';
 
 export const dataService = {
+  // Cache for getData
+  _cache: {
+    data: null,
+    timestamp: null,
+    ttl: 10000 // 10 seconds cache TTL
+  },
+
   // Fetch all data
   async getData() {
     try {
-      // Read directly from appointments.json since we're not using an API yet
+      // Check cache first
+      const now = Date.now();
+      if (
+        this._cache.data && 
+        this._cache.timestamp && 
+        now - this._cache.timestamp < this._cache.ttl
+      ) {
+        return this._cache.data;
+      }
+
+      // If cache miss or expired, fetch fresh data
       const data = await fetch('/api/appointments').then(res => res.json());
       
       // Map the data structure to match what the UI expects
-      return {
+      const mappedData = {
         reservedSlots: data.appointments || [],
         workingHours: data.workingHours || { start: "09:00", end: "17:00", slotDuration: 60 },
         blockedDates: (data.blockedSlots || []).map(slot => slot.date),
       };
+
+      // Update cache
+      this._cache.data = mappedData;
+      this._cache.timestamp = now;
+
+      return mappedData;
     } catch (error) {
       console.error('Error fetching data:', error);
       return { 

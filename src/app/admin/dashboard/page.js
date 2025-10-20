@@ -3,23 +3,25 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
+import { Quote } from 'lucide-react';
 import { dataService } from '@/lib/dataService';
+import { reviewService } from '@/lib/reviewService'
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
     totalAppointments: 0,
     upcomingAppointments: 0,
-    availableSlotsToday: 0
+    availableSlotsToday: 0,
+    totalReviews: 0,
   });
   const [loading, setLoading] = useState(true);
   const [authChecked, setAuthChecked] = useState(false);
   const router = useRouter();
-
   useEffect(() => {
     const checkAuth = () => {
       const cookies = document.cookie.split(';');
       const authCookie = cookies.find(cookie => cookie.trim().startsWith('admin-auth='));
-      
+
       if (!authCookie) {
         router.push('/admin/login');
         return false;
@@ -31,6 +33,7 @@ export default function AdminDashboard() {
     if (isAuthenticated) {
       setAuthChecked(true);
       fetchDashboardData();
+
     }
   }, [router]);
 
@@ -63,6 +66,7 @@ export default function AdminDashboard() {
       // Get reserved slots for today
       const todayReserved = reservedSlots.filter(slot => slot.date === today);
       const availableToday = totalDailySlots - todayReserved.length;
+      const totalReview = (await reviewService.getReviewsCount()).total
 
       // Upcoming appointments (today and future)
       const upcoming = reservedSlots.filter(slot =>
@@ -72,7 +76,8 @@ export default function AdminDashboard() {
       setStats({
         totalAppointments: reservedSlots.length,
         upcomingAppointments: upcoming,
-        availableSlotsToday: availableToday
+        availableSlotsToday: availableToday,
+        totalReviews: totalReview
       });
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -154,6 +159,15 @@ export default function AdminDashboard() {
             <p>Available Today</p>
           </div>
         </div>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon}>
+            <Quote />
+          </div>
+          <div className={styles.statInfo}>
+            <h3>{stats.totalReviews}</h3>
+            <p>Total Reviews</p>
+          </div>
+        </div>
       </div>
 
       {/* Quick Actions */}
@@ -179,6 +193,15 @@ export default function AdminDashboard() {
             </div>
             <h3>Manage Appointments</h3>
             <p>Add, confirm, and manage appointments</p>
+          </a>
+
+          
+          <a href="/admin/dashboard/manage-reviews" className={styles.actionCard}>
+            <div className={styles.actionIcon}>
+              <Quote/>
+            </div>
+            <h3>Manage Reviews</h3>
+            <p>Add, confirm, and manage reviews</p>
           </a>
         </div>
       </div>

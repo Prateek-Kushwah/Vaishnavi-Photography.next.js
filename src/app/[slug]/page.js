@@ -115,7 +115,7 @@ export async function generateMetadata({ params }) {
 
   // Enhanced metadata with additional SEO fields
   return {
-    title: `${client.name} - Portfolio | Your Company Name`,
+    title: `${client.name} - Galery | Riya & Kratish | Vaishnavi Photography`,
     description: client.bio,
     keywords: `${client.name}, portfolio, photography, creative work, gallery`,
     authors: [{ name: 'Your Company Name' }],
@@ -179,7 +179,7 @@ export async function generateMetadata({ params }) {
 // Generate sitemap configuration (optional but recommended)
 export async function generateSitemap() {
   return clients.map((client) => ({
-    url: `https://yourdomain.com/clients/${client.page}`,
+    url: `https://vaishnaviphotography.com/${client.page}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.8,

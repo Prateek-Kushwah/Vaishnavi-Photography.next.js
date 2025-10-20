@@ -43,18 +43,26 @@ export function Header() {
   };
 
   const menuVariants = {
-    hidden: { opacity: 0, y: -20 },
+    hidden: { opacity: 0, transform: 'translateY(-20px)' },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: { staggerChildren: 0.05, ease: "easeOut" },
+      transform: 'translateY(0)',
+      transition: { staggerChildren: 0.03, ease: "easeOut", duration: 0.2 },
     },
-    exit: { opacity: 0, y: -20, transition: { ease: "easeIn" } },
+    exit: { 
+      opacity: 0, 
+      transform: 'translateY(-20px)', 
+      transition: { ease: "easeIn", duration: 0.15 } 
+    },
   };
 
   const linkVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, transform: 'translateY(-10px)' },
+    visible: { 
+      opacity: 1, 
+      transform: 'translateY(0)',
+      transition: { duration: 0.15 }
+    },
   };
 
   return (
@@ -86,6 +94,7 @@ export function Header() {
                     key={link.name}
                     href={link.href}
                     className={clsx(styles.navLink, isActive && styles.active)}
+                    prefetch={true}
                   >
                     {link.name}
                     {isActive && (
@@ -95,7 +104,7 @@ export function Header() {
                         initial={false}
                         transition={{
                           type: "spring",
-                          stiffness: 500,
+                          stiffness: 380,
                           damping: 30,
                         }}
                       />

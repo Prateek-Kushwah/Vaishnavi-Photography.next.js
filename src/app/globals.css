@@ -3,8 +3,8 @@
   --white-color: #ffffff;
   --primary-bg: #111827;
   --secondary-bg: #e4e5f1;
-  --card-bg: rgba(31, 41, 55, 1);
-  --input-bg: rgba(17, 24, 39, 0.8);
+  /* --card-bg: rgba(31, 41, 55, 1); */
+  --card-bg: rgba(17, 24, 39, 1);
   --primary-text: #f9fafb;
   --secondary-text: #d1d5db;
   --gradient-highlight: linear-gradient(90deg, #818cf8, #c084fc);
@@ -12,7 +12,7 @@
   --gradient-primary: linear-gradient(
     135deg,
     #6366f1 0%,
-    #8b5cf6 50%,    
+    #8b5cf6 50%,
     #c084fc 100%
   );
   --gradient-secondary: linear-gradient(
@@ -69,6 +69,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--hover-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  transition: all 0.3s ease-in-out;
 }
 
 a {
@@ -172,24 +176,6 @@ body {
   box-shadow: 0 15px 30px -10px var(--button-shadow-hover);
 }
 
-.input:-webkit-autofill,
-.input:-webkit-autofill:hover,
-.input:-webkit-autofill:focus,
-.textarea:-webkit-autofill,
-.textarea:-webkit-autofill:hover,
-.textarea:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--primary-text) !important;
-  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
-  transition: background-color 5000s ease-in-out 0s !important;
-  border-radius: 8px !important;
-}
-
-.inputContainer:focus-within .input:-webkit-autofill,
-.inputContainer:focus-within .textarea:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset,
-    0 0 0 2px var(--shape-purple) !important;
-}
-
 @media (max-width: 768px) {
   .title {
     font-size: 2.5rem;
@@ -200,7 +186,7 @@ body {
   }
 }
 
-/* Improved autofill styles in globals.css */
+/* Enhanced autofill styles in globals.css */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -211,8 +197,9 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--primary-text) !important;
-  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
-  transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset !important;
+  transition: background-color 5000s ease-in-out 0s,
+    box-shadow 5000s ease-in-out 0s !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 8px !important;
   color: var(--primary-text) !important;
@@ -222,18 +209,18 @@ select:-webkit-autofill:focus {
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill:focus,
 select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset, 
-                      0 0 0 2px var(--shape-purple) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset,
+    0 0 0 2px var(--shape-purple) !important;
   border-color: var(--shape-purple) !important;
 }
 
-/* For modern browsers supporting :autofill */
+/* Modern :autofill pseudo-class support */
 input:autofill,
 textarea:autofill,
 select:autofill {
-  background-color: var(--input-bg) !important;
+  background-color: var(--card-bg) !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
   color: var(--primary-text) !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 input:autofill:focus,
@@ -241,4 +228,5 @@ textarea:autofill:focus,
 select:autofill:focus {
   border-color: var(--shape-purple) !important;
   outline: none !important;
+  background-color: var(--card-bg) !important;
 }

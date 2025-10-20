@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah & Michael",
+    "role": "Wedding Clients",
+    "content": "Vaishnavi captured our wedding day perfectly! The photos are absolutely stunning and truly reflect the emotions of the day. We couldn't be happier with the results and will cherish these memories forever.",
+    "rating": 5,
+    "category": "Wedding",
+    "status": "approved"
+  },
+  {
+    "id": 2,
+    "name": "James Wilson",
+    "role": "Portrait Session",
+    "content": "The portrait session was amazing! Vaishnavi made me feel so comfortable and the final images exceeded all my expectations. Professional, creative, and delivered exactly what I wanted.",
+    "rating": 5,
+    "category": "Portrait",
+    "status": "approved"
+  },
+  {
+    "id": 1759926511648,
+    "name": "Ansul Kushwah",
+    "email": "Ansulkushwah590@gmail.com",
+    "rating": 5,
+    "content": "Hello There",
+    "category": "Family",
+    "status": "pending",
+    "bookedAt": "2025-10-08T12:28:28.745Z",
+    "createdAt": "2025-10-08T12:28:31.648Z"
+  },
+  {
+    "id": 1760117505904,
+    "name": "Ansul Kushwah",
+    "email": "Ansulkushwah590@gmail.com",
+    "rating": 5,
+    "content": "hi",
+    "category": "Family",
+    "status": "approved",
+    "bookedAt": "2025-10-10T17:31:45.353Z",
+    "createdAt": "2025-10-10T17:31:45.904Z"
+  }
+]
